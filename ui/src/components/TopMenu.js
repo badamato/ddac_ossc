@@ -1,9 +1,10 @@
 import React from 'react';
 import {connect} from 'react-redux';
+import { withStyles } from '@material-ui/core/styles';
 import AppBar from '@material-ui/core/AppBar';
 import Toolbar from '@material-ui/core/Toolbar';
 import Typography from '@material-ui/core/Typography';
-import { withStyles } from '@material-ui/core/styles';
+
 import {drawerToggle, changeScreen} from '../actions/NavigationActions'
 
 
@@ -39,7 +40,7 @@ class TopMenu extends React.Component {
                         <img style={{height: '100px'}}src={require('../images/logo-white.png')} />
                     </div>
                     <Typography className={classes.title} variant="h4" color="inherit" noWrap>
-                    CHAOS IN THE CLOUDS
+                        DDAC & OSS Cassandra
                     </Typography>
                 </Toolbar>
             </AppBar>
@@ -74,7 +75,7 @@ class TopMenu extends React.Component {
 }
 
 const TopMenuContainer = connect(
-  mapStateToProps,
-  mapDispatchToProps
+    mapStateToProps,
+    mapDispatchToProps
 )(withStyles(styles)(TopMenu))
 export default TopMenuContainer

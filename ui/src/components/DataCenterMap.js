@@ -31,10 +31,10 @@ const styles = theme => ({
 });
 
 const colorScale = scaleLinear()
-  .domain([0, 100000000, 1338612970]) // Max is based on China
-  //.range(["#FFF176", "#FFC107", "#E65100"])
-  .range(["#FFF176", "#8031A7", "#8031A7"])
-  //.range(["#D3D3D3", "#808080", "#A9A9A9"])
+    .domain([0, 100000000, 1338612970]) // Max is based on China
+    //.range(["#FFF176", "#FFC107", "#E65100"])
+    .range(["#FFF176", "#8031A7", "#8031A7"])
+    //.range(["#D3D3D3", "#808080", "#A9A9A9"])
 
 const max = 20;
 const min = 10;
@@ -66,13 +66,13 @@ const getNodeStroke = function(node){
 
 const getNodeFill = function(node){
   if (node.last_seen == -1){
-   return nodeColors[1]
+    return nodeColors[1]
   }
   if (node.last_seen == 0){
-   return nodeColors[0]
+    return nodeColors[0]
   }
   else{
-   return nodeColors[2]
+    return nodeColors[2]
   }
 }
 

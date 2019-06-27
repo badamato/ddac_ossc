@@ -1,6 +1,5 @@
 import React from "react";
 import { connect } from 'react-redux';
-import { withStyles } from '@material-ui/core/styles';
 import Card from 'material-kit-react/components/Card/Card';
 import CardHeader from 'material-kit-react/components/Card/CardHeader';
 import CardBody from 'material-kit-react/components/Card/CardBody';
@@ -16,33 +15,28 @@ class ReadCard extends React.Component {
                 <Card className={"classes"}>
                     <CardHeader className={"cardheader"} style={{paddingTop: '20px'}}>BROWSING CATALOG</CardHeader>
                     <CardBody className={"cardbody"}>
-                    <div className={"cardtext"}>
-
-                    {
-                        [...this.props.reads].reverse().map((read, index) => {
-                            let imageUrl= "";
-                            if (read.dc === "AWS"){
-                              imageUrl = require('../images/aws.png')
+                        <div className={"cardtext"}>
+                            {
+                                [...this.props.reads].reverse().map((read, index) => {
+                                    let imageUrl= "";
+                                    if (read.dc === "AWS"){
+                                        imageUrl = require('../images/aws.png')
+                                    }
+                                    if (read.dc === "Azure"){
+                                        imageUrl = require('../images/azure.png')
+                                    }
+                                    if (read.dc === "GCP"){
+                                        imageUrl = require('../images/gcp.png')
+                                    }
+                                    return (
+                                        <div key={index}>
+                                            <img src={imageUrl} alt={read.dc}  height="36" width="58" style={{ "padding-right": "2em"}} />
+                                            Count: {read.count}, Result: {read.result}
+                                        </div>
+                                    )
+                                })
                             }
-                            if (read.dc === "Azure"){
-                              imageUrl = require('../images/azure.png')
-                            }
-                            if (read.dc === "GCP"){
-                              imageUrl = require('../images/gcp.png')
-                            }
-                            return (
-                              <div key={index}>
-                                <img src={imageUrl} alt={read.dc}  height="36" width="58" style={{ "padding-right": "2em"}} />
-                                Count: {read.count}, Result: {read.result}
-                              </div>
-                            )
-                        })
-                    }
-
-
-                    {/* {JSON.stringify([...this.props.reads].reverse())} */}
-
-                    </div>
+                        </div>
                     </CardBody>
                 </Card>
             </div>
@@ -59,8 +53,7 @@ const mapStateToProps = (state, ownProps) => {
 
 const mapDispatchToProps = (dispatch, ownProps) => {
     return {
-    init: () => {
-    },
+
     }
 }
 

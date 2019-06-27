@@ -11,31 +11,31 @@ class EventsCard extends React.Component {
     componentDidMount() {
         this.props.init();
     }
+
     render() {
-    const { classes } = this.props;
-    let events = []
-    Object.assign(events, this.props.events)
-        return (
-            <div className={"root"}>
-                <Card className={"card"} style={{marginBottom: '130px'}}>
-                    <CardHeader className={"cardheader"} style={{paddingTop: '20px'}}>EVENTS</CardHeader>
-                    <CardBody className={"cardbody"}>
-                    <div className={"cardtext"}>
-                    {
-                        events.reverse().map((event, index) => {
-                        return(
-                            <span key={index}>{event}<br /></span>
-                            )
-                            }
-                        )
-                    }
+        const { classes } = this.props;
 
-                    </div>
-                    </CardBody>
-                </Card>
-            </div>
-        );
-
+        let events = []
+        Object.assign(events, this.props.events)
+            return (
+                <div className={"root"}>
+                    <Card className={"card"} style={{marginBottom: '130px'}}>
+                        <CardHeader className={"cardheader"} style={{paddingTop: '20px'}}>EVENTS</CardHeader>
+                        <CardBody className={"cardbody"}>
+                            <div className={"cardtext"}>
+                                {
+                                    events.reverse().map((event, index) => {
+                                    return(
+                                        <span key={index}>{event}<br /></span>
+                                        )
+                                        }
+                                    )
+                                }
+                            </div>
+                        </CardBody>
+                    </Card>
+                </div>
+            );
     }
 }
 
@@ -47,8 +47,7 @@ const mapStateToProps = (state, ownProps) => {
 
 const mapDispatchToProps = (dispatch, ownProps) => {
     return {
-    init: () => {
-    },
+
     }
 }
 

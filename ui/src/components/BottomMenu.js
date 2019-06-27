@@ -130,28 +130,10 @@ class BottomMenu extends React.Component{
                                 <Button variant="contained" color="secondary" className={classes.button} size="large" onClick={() => {this.props.getReads()}}>LAUNCH APP</Button>
 
                                 <Button variant="contained" color="secondary" className={classes.button} size="large" onClick={() => {this.props.dropOneNode()}}>DROP ONE NODE</Button>
-
-                                <Button variant="contained" color="secondary" className={classes.button} size="large" onClick={() => {this.props.dropOneDataCenter()}}>DROP DATACENTER</Button>
-
-                                <Button variant="contained" color="secondary" className={classes.button} size="large" onClick={() => {this.props.resetAllNodes()}}>RESET DOWN NODES</Button>
-
-                                <Button variant="contained" color="secondary" className={classes.button} size="large" onClick={() => {this.props.rollingRestart()}}>ROLLING RESTART</Button>
                             </div>
                         </Paper>
                     </Drawer>
-                    {/* <Snackbar
-                    anchorOrigin={{ vertical: 'top', horizontal: 'center' }}
-                    autoHideDuration={4000}
-                    open={this.props.snackbarOpen}
-                    onClose={() => this.props.snackbarToggle(!this.props.snackbarOpen)}
-                    ContentProps={{
-                        'aria-describedby': 'message-id',
-                        classes: {
-                            root: classes.root
-                        }
-                    }}
-                    message={<span id="message-id">{this.props.events}</span>}
-                    /> */}
+
                 </div>
             );
         }
@@ -167,7 +149,7 @@ const mapStateToProps = (state, ownProps) => {
         page: state.NavigationReducer.page,
         writes: state.app.writes,
         reads: state.app.reads,
-        snackbarOpen: state.app.snackbarOpen
+        // snackbarOpen: state.app.snackbarOpen
     }
 }
 
