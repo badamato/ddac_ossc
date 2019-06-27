@@ -28,7 +28,6 @@ const styles = theme => ({
     },
 });
 
-
 class Dashboard extends React.Component {
     componentDidMount() {
         this.props.init();
@@ -158,33 +157,32 @@ class Dashboard extends React.Component {
                         <Table className={classes.table}>
                             <TableHead style={{backgroundColor: 'silver'}}>
                                 <TableRow>
-                                    <TableCell className={classes.tablecell} style={{color: 'black', fontSize: '25px'}}>DATA CENTER</TableCell>
+                                    <TableCell className={classes.tablecell} style={{color: 'black', fontSize: '25px'}}>NODE</TableCell>
                                     <TableCell className={classes.tablecell} style={{color: 'black', fontSize: '25px'}} align='center'>ONLINE</TableCell>
                                     <TableCell className={classes.tablecell} style={{color: 'black', fontSize: '25px'}} align='center'>STARTING</TableCell>
                                     <TableCell className={classes.tablecell} style={{color: 'black', fontSize: '25px'}} align='center'>OFFLINE</TableCell>
                                     <TableCell className={classes.tablecell} style={{color: 'black', fontSize: '25px'}} align='center'>
-                        { this.props.fullscreen != "dc-paper" ? 
-                            <IconButton 
-                                color="primary" 
-                                onClick={() => { this.props.updateValue("fullscreen", "dc-paper")}} 
-                                className={classes.menuButton}  
-                                aria-label="Fullscreen"
-                            >
-                                <FullscreenIcon />
-                            </IconButton>
-                            : 
-                            <IconButton 
-                                onClick={() => { this.props.updateValue("fullscreen", "")}} 
-                                className={classes.menuButton} 
-                                color="primary" 
-                                aria-label="Fullscreen Exit"
-                            >
-                                <FullscreenExitIcon />
-                            </IconButton>
-
-                        } </TableCell>
-                            </TableRow>
-                        </TableHead>
+                                        { this.props.fullscreen != "dc-paper" ? 
+                                                <IconButton 
+                                                    color="primary" 
+                                                    onClick={() => { this.props.updateValue("fullscreen", "dc-paper")}} 
+                                                    className={classes.menuButton}  
+                                                    aria-label="Fullscreen"
+                                                >
+                                                    <FullscreenIcon />
+                                                </IconButton>
+                                                : 
+                                                <IconButton 
+                                                    onClick={() => { this.props.updateValue("fullscreen", "")}} 
+                                                    className={classes.menuButton} 
+                                                    color="primary" 
+                                                    aria-label="Fullscreen Exit"
+                                                >
+                                                    <FullscreenExitIcon />
+                                                </IconButton>
+                                        } </TableCell>
+                                </TableRow>
+                            </TableHead>
                         <TableBody>
                             {dataCenterDetails.map ((detail, id) => {
                                 return (
@@ -207,7 +205,7 @@ class Dashboard extends React.Component {
                             size="large" 
                             onClick={() => {this.props.updateValue("mapView", !this.props.mapView)}}
                         >
-                            Table
+                        Table
                         </Button>
                         <DataCenterMapContainer/>
                     </div>
@@ -232,19 +230,19 @@ const mapStateToProps = (state, ownProps) => {
 
 const mapDispatchToProps = (dispatch, ownProps) => {
     return {
-      init: () => {
-          dispatch(getNodeInfo())
-      },
-      drawerToggle: (drawerOpen) => {
-          dispatch(drawerToggle(drawerOpen))
-      }, 
-      changeScreen: (page) => {
-          dispatch(changeScreen(page))
-          dispatch(drawerToggle(false))
-      },
-      updateValue: (key, value) => {
-          dispatch(updateValue(key, value))
-      } 
+        init: () => {
+            dispatch(getNodeInfo())
+        },
+        drawerToggle: (drawerOpen) => {
+            dispatch(drawerToggle(drawerOpen))
+        }, 
+        changeScreen: (page) => {
+            dispatch(changeScreen(page))
+            dispatch(drawerToggle(false))
+        },
+        updateValue: (key, value) => {
+            dispatch(updateValue(key, value))
+        } 
     }
 }
 

@@ -20,7 +20,7 @@ class EventsCard extends React.Component {
             return (
                 <div className={"root"}>
                     <Card className={"card"} style={{marginBottom: '130px'}}>
-                        <CardHeader className={"cardheader"} style={{paddingTop: '20px'}}>EVENTS</CardHeader>
+                        <CardHeader className={"cardheader"} style={{paddingTop: '20px', backgroundColor: 'silver'}}>EVENTS</CardHeader>
                         <CardBody className={"cardbody"}>
                             <div className={"cardtext"}>
                                 {
@@ -47,7 +47,8 @@ const mapStateToProps = (state, ownProps) => {
 
 const mapDispatchToProps = (dispatch, ownProps) => {
     return {
-
+        init: () => {
+        },
     }
 }
 

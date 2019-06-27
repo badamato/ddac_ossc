@@ -13,7 +13,7 @@ class ReadCard extends React.Component {
         return (
             <div className={"root"}>
                 <Card className={"classes"}>
-                    <CardHeader className={"cardheader"} style={{paddingTop: '20px'}}>BROWSING CATALOG</CardHeader>
+                    <CardHeader className={"cardheader"} style={{paddingTop: '20px', backgroundColor: 'silver'}}>BROWSING CATALOG</CardHeader>
                     <CardBody className={"cardbody"}>
                         <div className={"cardtext"}>
                             {
@@ -53,7 +53,8 @@ const mapStateToProps = (state, ownProps) => {
 
 const mapDispatchToProps = (dispatch, ownProps) => {
     return {
-
+        init: () => {
+        },
     }
 }
 
