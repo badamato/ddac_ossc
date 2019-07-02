@@ -53,32 +53,6 @@ class App extends Component {
         <MuiThemeProvider theme={theme}>
             <TopMenu />
             <MainPage />
-            {/* <Grid>
-                {
-                this.props.NavigationReducer.page === 'Local Node Page' ?
-                <LocalNodePage />
-                :
-                null
-                }
-                {
-                this.props.NavigationReducer.page === 'Remote Node Simulation' ?
-                <RemoteNodeSim />
-                :
-                null
-                }
-                {
-                this.props.NavigationReducer.page === 'Local Data Center Simulation' ?
-                <LocalDataCenterSim />
-                :
-                null
-                }
-                {
-                this.props.NavigationReducer.page === 'Custom Event Simulation' ?
-                <CustomSim />
-                :
-                null
-                }
-            </Grid> */}
             <BottomMenu />
         </MuiThemeProvider>
         );

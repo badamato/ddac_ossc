@@ -75,36 +75,35 @@ used_dc = localDC
 c = 0
 x = 0
 while 1:
-
-   data1 = randint(1,100)
-   data2 = randint(1,100)
-   data3 = randint(1,100)
-   current = time.localtime()
-   bucket = str(current.tm_year) + str(current.tm_mon) + str(current.tm_mday) + str(current.tm_hour) + str(current.tm_min)
-   d = time.strftime('%Y-%m-%dT%H:%M:%S', current)
-   query = """ INSERT INTO demo.table1 (bucket, ts, d, data1, data2, data3) VALUES ('%s', now(), '%s', %s, %s, %s) """ % (str(bucket), str(d), int(data1), int(data2), int(data3))
-   session.execute (query)
-   #session.execute_async (query)
-   ts = int(time.time() * 1000)
-   while ts + cross_dc_latency_ms > int(time.time() * 1000):
-    t1 = 0
-   c = c + 1
-   x = x + 1
-   #print ".",
-   if(x == rowcount):
-    last_c = coordinator
-    future = session.execute_async (query, trace=True )
-    result = future.result()
-    try:
-     trace = future.get_query_trace(1)
-     coordinator =  trace.coordinator
-    except:
-     coordinator = last_c
-    for h in session.hosts:
-     if h.address == coordinator:
-      used_dc = h.datacenter
-    print(""" Rows Written %s (%s) - %s""" ) % (c, used_dc, d)
-    x = 0
+    data1 = randint(1,100)
+    data2 = randint(1,100)
+    data3 = randint(1,100)
+    current = time.localtime()
+    bucket = str(current.tm_year) + str(current.tm_mon) + str(current.tm_mday) + str(current.tm_hour) + str(current.tm_min)
+    d = time.strftime('%Y-%m-%dT%H:%M:%S', current)
+    query = """ INSERT INTO demo.table1 (bucket, ts, d, data1, data2, data3) VALUES ('%s', now(), '%s', %s, %s, %s) """ % (str(bucket), str(d), int(data1), int(data2), int(data3))
+    session.execute (query)
+    #session.execute_async (query)
+    ts = int(time.time() * 1000)
+    while ts + cross_dc_latency_ms > int(time.time() * 1000):
+        t1 = 0
+    c = c + 1
+    x = x + 1
+    #print ".",
+    if(x == rowcount):
+        last_c = coordinator
+        future = session.execute_async (query, trace=True )
+        result = future.result()
+        try:
+        trace = future.get_query_trace(1)
+        coordinator =  trace.coordinator
+        except:
+        coordinator = last_c
+        for h in session.hosts:
+        if h.address == coordinator:
+        used_dc = h.datacenter
+        print(""" Rows Written %s (%s) - %s""" ) % (c, used_dc, d)
+        x = 0
 
 cluster.shutdown()
 sys.exit(0)

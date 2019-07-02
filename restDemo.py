@@ -23,11 +23,9 @@ config.read('demo.ini')
 
 #Configuration
 
-contactpoints = config.get('CONFIG','contactpoints').split(',')
+ddaccontactpoints = config.get('CONFIG','ddaccontactpoints').split(',')
+osscontactpoints = config.get('CONFIG','osscontactpoints').split(',')
 localDC = config.get('KHAOS','localDC')
-lcm = config.get('KHAOS','lcm')
-lcmport = config.get('KHAOS','lcmport')
-clustername = config.get('CONFIG','clustername').replace(' ','%20')
 username = config.get('KHAOS','sshusername')
 keyfile = config.get('KHAOS','sshkeyfile')
 rowcount = config.getint('CONFIG','rowcount')
@@ -35,13 +33,13 @@ ks_query = config.get('CONFIG','ks_query')
 auth_provider = PlainTextAuthProvider (username= config.get('CONFIG','clusteruser'), password= config.get('CONFIG','clusterpass'))
 
 if config.getint('CONFIG','sslenabled') == 0:
-   ssl_opts = None
+    ssl_opts = None
 else:
-   ssl_opts = {
-       'ca_certs':  config.get('CONFIG','sslca'),
-       'ssl_version': PROTOCOL_TLSv1,
-       'cert_reqs':  CERT_OPTIONAL
-   }
+    ssl_opts = {
+        'ca_certs':  config.get('CONFIG','sslca'),
+        'ssl_version': PROTOCOL_TLSv1,
+        'cert_reqs':  CERT_OPTIONAL
+    }
 
 
 
@@ -53,105 +51,31 @@ profile1 = ExecutionProfile( load_balancing_policy=DCAwareRoundRobinPolicy(local
 
 print "Connecting to cluster"
 
-cluster = Cluster( contact_points=contactpoints,
-                   auth_provider=auth_provider,
-                   ssl_options=ssl_opts,
-                   execution_profiles={EXEC_PROFILE_DEFAULT: profile1},
-                   )
+ddacCluster = Cluster( contact_points=ddaccontactpoints,
+                    auth_provider=auth_provider,
+                    ssl_options=ssl_opts,
+                    execution_profiles={EXEC_PROFILE_DEFAULT: profile1},
+)
+
+ossCluster = Cluster( contact_points=osscontactpoints,
+                    auth_provider=auth_provider,
+                    ssl_options=ssl_opts,
+                    execution_profiles={EXEC_PROFILE_DEFAULT: profile1},
+)
 
 
-session = cluster.connect()
+ddacSession = ddacCluster.connect()
+ossSession = ossCluster.connect()
 print "Connected to cluster"
 
-session.execute (ks_query)
-session.execute (""" CREATE TABLE IF NOT EXISTS  demo.table2 (     bucket text,     ts timeuuid,     d text,     data1 text,     data2 text,     data3 text,     PRIMARY KEY (bucket, ts)) WITH CLUSTERING ORDER BY (ts desc) """)
-cluster.shutdown()
+ddacSession.execute (ks_query)
+ddacSession.execute (""" CREATE TABLE IF NOT EXISTS  demo.table2 (     bucket text,     ts timeuuid,     d text,     data1 text,     data2 text,     data3 text,     PRIMARY KEY (bucket, ts)) WITH CLUSTERING ORDER BY (ts desc) """)
+ddacCluster.shutdown()
 
-#KhaosKatz functions
-def detectCluster():
-   clusterInfo = []
-   nodeInfo = []
-   url = """http://%s:%s/%s/nodes""" % (lcm, lcmport, clustername)
-   print url
-   response = urllib2.urlopen(url)
-   data = response.read()
-   values = json.loads(data)
-   for i in values:
-      clusterInfo.append([i["node_ip"], i["dc"]])
-   return clusterInfo
+ossSession.execute (ks_query)
+ossSession.execute (""" CREATE TABLE IF NOT EXISTS  demo.table2 (     bucket text,     ts timeuuid,     d text,     data1 text,     data2 text,     data3 text,     PRIMARY KEY (bucket, ts)) WITH CLUSTERING ORDER BY (ts desc) """)
+ossCluster.shutdown()
 
-def recoverNode(n):
-   k = paramiko.RSAKey.from_private_key_file(keyfile)
-   c = paramiko.SSHClient()
-   c.set_missing_host_key_policy(paramiko.AutoAddPolicy())
-   c.connect( hostname = n, username = username, pkey = k )
-   url = """http://%s:%s/%s/ops""" % (lcm, lcmport, clustername)
-   #d = """{"ips":["%s"],"action":"stop"}""" % (n)
-   #requests.post(url, data = d)
-   stdin , stdout, stderr = c.exec_command("sudo service dse stop")
-   time.sleep(3)
-   d = """{"ips":["%s"],"action":"start"}""" % (n)
-   requests.post(url, data = d)
-   stdin , stdout, stderr = c.exec_command("sudo rm -rf /tmp/dse/*")
-   stdin , stdout, stderr = c.exec_command("sudo service dse start")
-   return "Recovered"
-
-def killNode(n):
-   k = paramiko.RSAKey.from_private_key_file(keyfile)
-   c = paramiko.SSHClient()
-   c.set_missing_host_key_policy(paramiko.AutoAddPolicy())
-   c.connect( hostname = n, username = username, pkey = k )
-   stdin , stdout, stderr = c.exec_command("sudo pkill -9 -f dse.jar")
-   return "Killed"
-
-def failSingleNode(localdc):
-   c = detectCluster()
-   dc = ""
-   while dc != localdc:
-      r = randint(1,len(c) - 1)
-      node = c[r][0]
-      dc = c[r][1]
-   killNode(node)
-   return node
-
-def failDualNode(localdc):
-   n1 = failLocalNode()
-   n2 = n1
-   while n2 == n1:
-      n2 = failLocalNode()
-   return [n1, n2]
-
-
-def failDC(localdc):
-   c = detectCluster()
-   killList = []
-   for n in c:
-      if n[1] == localdc:
-         killNode(n[0])
-         killList.append(n[0])
-   return killList
-
-def rollingRestart(delay):
-   c = detectCluster()
-   for n in c:
-      killNode(n[0])
-      time.sleep(2)
-      recoverNode(n[0])
-      time.sleep(delay)
-   return "ok"
-
-def randomKill(chance):
-   c = detectCluster()
-   killList = []
-   failsafe = 0
-   for n in c:
-      roll = randint(1,100)
-      if roll <= chance:
-         if failsafe == 1:
-            killNode(n[0])
-            killList.append(n[0])
-      failsafe = 1
-   return killList
 
 #API Endpoints Below
 @app.route('/')
@@ -160,10 +84,11 @@ def index():
 
 @app.route('/demo/write', methods=['POST'])
 def writev0():
-   if not request.json or not 'count' in request.json or not 'dc' in request.json or not 'cl' in request.json:
+   if not request.json or not 'count' in request.json or not 'dc' in request.json or not 'cl' in request.json or not 'targetCluster' in request.json:
       abort(400)
    dc = request.json['dc']
    count = request.json['count']
+   targetCluster = request.json['targetCluster']
    cl = request.json['cl']
    if not cl == "ONE" and not cl == "TWO" and not cl == "ALL" and not cl == "LOCAL_QUORUM" and not cl == "QUORUM":
       abort(400)
@@ -178,7 +103,7 @@ def writev0():
    if cl == "ALL":
       CL = ConsistencyLevel.ALL
    
-   def writeStream():
+   def writeStream(targetCluster):
       coordinator = dc
       last_c = coordinator
       used_dc = dc
@@ -190,12 +115,16 @@ def writev0():
                             )
 
       print "Connecting to cluster"
+      if (targetCluster == "DDAC"):
+        contactpoints = ddaccontactpoints
+      else: 
+        contactpoints = osscontactpoints
 
       cluster = Cluster( contact_points=contactpoints,
-                   auth_provider=auth_provider,
-                   ssl_options=ssl_opts,
-                   execution_profiles={EXEC_PROFILE_DEFAULT: profile1},
-                   )
+                    auth_provider=auth_provider,
+                    ssl_options=ssl_opts,
+                    execution_profiles={EXEC_PROFILE_DEFAULT: profile1},
+      )
 
       session = cluster.connect()
 
@@ -259,7 +188,7 @@ def writev0():
          x = x + 1
          y = y + 1
       cluster.shutdown()
-   return Response(writeStream(), content_type='application/stream+json')
+   return Response(writeStream(targetCluster), content_type='application/stream+json')
 
 
 @app.route('/demo/read', methods=['POST'])
@@ -295,11 +224,16 @@ def read():
 
       print "Connecting to cluster"
 
-      cluster = Cluster( contact_points=contactpoints,
-                   auth_provider=auth_provider,
-                   ssl_options=ssl_opts,
-                   execution_profiles={EXEC_PROFILE_DEFAULT: profile1},
-                   )
+      cluster = Cluster( contact_points=ddaccontactpoints,
+                    auth_provider=auth_provider,
+                    ssl_options=ssl_opts,
+                    execution_profiles={EXEC_PROFILE_DEFAULT: profile1},
+      )
+      cluster = Cluster( contact_points=osscontactpoints,
+                    auth_provider=auth_provider,
+                    ssl_options=ssl_opts,
+                    execution_profiles={EXEC_PROFILE_DEFAULT: profile1},
+      )
 
 
       session = cluster.connect()
@@ -369,102 +303,18 @@ def read():
    return Response(readStream(), content_type='application/stream+json')
 
 
-@app.route('/demo/node', methods=['GET'])
-def node():
-   nodeList = []
-   c = detectCluster()
-   for n in c:
-      addMe = 1
-      for d in nodeList:
-         if d == n[0]:
-            addMe = 0
-      if addMe == 1:
-         nodeList.append(n[0])
-   #dcSet = set(dcList)
-   #dcList = dict.fromkeys("dc", dcSet)
-   return json.dumps(nodeList)
-
-@app.route('/demo/dc', methods=['GET'])
-def dc():
-   dcList = []
-   c = detectCluster()
-   for n in c:
-      addMe = 1
-      for d in dcList:
-         if d == n[1]:
-            addMe = 0
-      if addMe == 1:
-         dcList.append(n[1])
-   #dcSet = set(dcList)
-   #dcList = dict.fromkeys("dc", dcSet)
-   return json.dumps(dcList)
-
-
 @app.route('/demo/nodefull', methods=['GET'])
 def nodefull():
-   clusterInfo = []
-   nodeInfo = []
-   url = "http://%s:%s/%s/nodes""" % (lcm, lcmport, clustername)
-   response = urllib2.urlopen(url)
-   data = json.loads(response.read())
-   return json.dumps(data)
+    n = ddaccontactpoints.split(",")[0]
+    #combine with nodetool status of oss
+    
+    k = paramiko.RSAKey.from_private_key_file(keyfile)
+    c = paramiko.SSHClient()
+    c.set_missing_host_key_policy(paramiko.AutoAddPolicy())
+    c.connect( hostname = n, username = username, pkey = k )
+    stdin , stdout, stderr = c.exec_command("nodeful status")
+    return stdout
 
-
-@app.route('/demo/recover', methods=['POST'])
-def recover():
-   if not request.json:
-      abort(400)
-   t = request.json
-   for n in t:
-      recoverNode(n)
-   return "ok"
-
-@app.route('/demo/killnode', methods=['POST'])
-def killnode():
-   if not request.json:
-      abort(400)
-   for n in request.json:
-      killNode(n)
-   return json.dumps(request.json)
-
-@app.route('/demo/chaos', methods=['POST'])
-def chaos():
-   if not request.json or not 'dc' in request.json or not 'scenario' in request.json:
-      abort(400)
-   dc = request.json['dc']
-   scenario = request.json['scenario']
-
-   if scenario == 1: #Single node failure
-     nodes = []
-     failed = failSingleNode(dc) 
-     nodes.append(failed)
-     j = json.dumps(nodes)
-     return j
-
-   if scenario == 2: #Dual node failure
-     failed = failDualNode(dc) 
-     j = json.dumps(failed)
-     return j
-
-   if scenario == 3: # Total DC Failure
-     failed = failDC(dc) 
-     j = json.dumps(failed)
-     return j
-
-   if scenario == 4: # Rolling Restart
-     if not 'rrdelay' in request.json:
-        return "501: rrdelay missing from request"
-     rrdelay = request.json['rrdelay']
-     failed = rollingRestart(rrdelay) 
-     return "[]"
-
-   if scenario == 5: # Random Kill!
-     if not 'killchance' in request.json:
-        return "501: killchance missing from request"
-     killchance = request.json['killchance']
-     failed = killChange(killchance) 
-     j = json.dumps(failed)
-     return j
 
 if __name__ == '__main__':
     app.run(debug=True)

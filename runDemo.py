@@ -31,10 +31,10 @@ ssl_opts = {
 print "Connecting to cluster"
 
 cluster = Cluster( contact_points=contactpoints,
-                   auth_provider=auth_provider,
-                   ssl_options=ssl_opts,
-                   execution_profiles={EXEC_PROFILE_DEFAULT: profile1},
-                   )
+                    auth_provider=auth_provider,
+                    ssl_options=ssl_opts,
+                    execution_profiles={EXEC_PROFILE_DEFAULT: profile1},
+                    )
 
 session = cluster.connect()
 
@@ -46,23 +46,23 @@ c = 0
 x = 0
 while 1:
 
-   name = randint(0,32)
-   stat0 = randint(1,100)
-   stat1 = randint(1,100)
-   stat2 = randint(1,100)
-   game = randint(1,100)
+    name = randint(0,32)
+    stat0 = randint(1,100)
+    stat1 = randint(1,100)
+    stat2 = randint(1,100)
+    game = randint(1,100)
 
-   ts = int(time.time() * 1000)
-   session.execute (""" INSERT INTO stats.player_stats (name, game, ts, stat1, stat2, stat3) VALUES (%s, %s, now(), %s, %s, %s) """, (str(name), str(game), int(stat0), int(stat1), int(stat2)))
-   #session.execute_async (""" INSERT INTO stats.player_stats (name, game, ts, stat1, stat2, stat3) VALUES (%s, %s, now(), %s, %s, %s) """, (str(name), str(game), int(stat0), int(stat1), int(stat2)))
-   #sleep(0.01)
-   while ts + 30 > int(time.time() * 1000):
-    t1 = 0
-   c = c + 1
-   x = x + 1
-   if(x == 100):
-      print(""" Rows Written %s """ ) % c
-      x = 0
+    ts = int(time.time() * 1000)
+    session.execute (""" INSERT INTO stats.player_stats (name, game, ts, stat1, stat2, stat3) VALUES (%s, %s, now(), %s, %s, %s) """, (str(name), str(game), int(stat0), int(stat1), int(stat2)))
+    #session.execute_async (""" INSERT INTO stats.player_stats (name, game, ts, stat1, stat2, stat3) VALUES (%s, %s, now(), %s, %s, %s) """, (str(name), str(game), int(stat0), int(stat1), int(stat2)))
+    #sleep(0.01)
+    while ts + 30 > int(time.time() * 1000):
+        t1 = 0
+    c = c + 1
+    x = x + 1
+    if(x == 100):
+        print(""" Rows Written %s """ ) % c
+        x = 0
 
 cluster.shutdown()
 sys.exit(0)
