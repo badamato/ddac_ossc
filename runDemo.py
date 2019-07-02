@@ -34,7 +34,7 @@ cluster = Cluster( contact_points=contactpoints,
                     auth_provider=auth_provider,
                     ssl_options=ssl_opts,
                     execution_profiles={EXEC_PROFILE_DEFAULT: profile1},
-                    )
+)
 
 session = cluster.connect()
 

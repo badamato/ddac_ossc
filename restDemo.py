@@ -24,7 +24,7 @@ config.read('demo.ini')
 #Configuration
 
 ddaccontactpoints = config.get('CONFIG','ddaccontactpoints').split(',')
-osscontactpoints = config.get('CONFIG','osscontactpoints').split(',')
+osscontactpoints = config.get('CONFIG','osscontactpoints')
 localDC = config.get('KHAOS','localDC')
 username = config.get('KHAOS','sshusername')
 keyfile = config.get('KHAOS','sshkeyfile')
@@ -33,13 +33,13 @@ ks_query = config.get('CONFIG','ks_query')
 auth_provider = PlainTextAuthProvider (username= config.get('CONFIG','clusteruser'), password= config.get('CONFIG','clusterpass'))
 
 if config.getint('CONFIG','sslenabled') == 0:
-    ssl_opts = None
+  ssl_opts = None
 else:
-    ssl_opts = {
-        'ca_certs':  config.get('CONFIG','sslca'),
-        'ssl_version': PROTOCOL_TLSv1,
-        'cert_reqs':  CERT_OPTIONAL
-    }
+  ssl_opts = {
+    'ca_certs':  config.get('CONFIG','sslca'),
+    'ssl_version': PROTOCOL_TLSv1,
+    'cert_reqs':  CERT_OPTIONAL
+  }
 
 
 
@@ -47,14 +47,14 @@ else:
 profile1 = ExecutionProfile( load_balancing_policy=DCAwareRoundRobinPolicy(local_dc=localDC, used_hosts_per_remote_dc=3),
                             speculative_execution_policy=ConstantSpeculativeExecutionPolicy(.05, 20),
                             consistency_level = ConsistencyLevel.ONE
-                            )
+)
 
 print "Connecting to cluster"
 
 ddacCluster = Cluster( contact_points=ddaccontactpoints,
-                    auth_provider=auth_provider,
-                    ssl_options=ssl_opts,
-                    execution_profiles={EXEC_PROFILE_DEFAULT: profile1},
+                      auth_provider=auth_provider,
+                      ssl_options=ssl_opts,
+                      execution_profiles={EXEC_PROFILE_DEFAULT: profile1},
 )
 
 ossCluster = Cluster( contact_points=osscontactpoints,
@@ -78,52 +78,58 @@ ossCluster.shutdown()
 
 
 #API Endpoints Below
+
+#>>>>>>>>>>>>>>>>>>>>>>>INIT
 @app.route('/')
 def index():
-    return "Ping? Pong!"
+  return "Ping? Pong!"
 
+
+#>>>>>>>>>>>>>>>>>>>>>>>WRITE
 @app.route('/demo/write', methods=['POST'])
 def writev0():
-   if not request.json or not 'count' in request.json or not 'dc' in request.json or not 'cl' in request.json or not 'targetCluster' in request.json:
-      abort(400)
-   dc = request.json['dc']
-   count = request.json['count']
-   targetCluster = request.json['targetCluster']
-   cl = request.json['cl']
-   if not cl == "ONE" and not cl == "TWO" and not cl == "ALL" and not cl == "LOCAL_QUORUM" and not cl == "QUORUM":
-      abort(400)
-   if cl == "ONE":
-      CL = ConsistencyLevel.ONE
-   if cl == "TWO":
-      CL = ConsistencyLevel.TWO
-   if cl == "LOCAL_QUORUM":
-      CL = ConsistencyLevel.LOCAL_QUORUM
-   if cl == "QUORUM":
-      CL = ConsistencyLevel.QUORUM
-   if cl == "ALL":
-      CL = ConsistencyLevel.ALL
-   
-   def writeStream(targetCluster):
+  if not request.json or not 'count' in request.json or not 'dc' in request.json or not 'cl' in request.json or not 'targetCluster' in request.json:
+    abort(400)
+  dc = request.json['dc']
+  count = request.json['count']
+  targetCluster = request.json['targetCluster']
+  cl = request.json['cl']
+  if not cl == "ONE" and not cl == "TWO" and not cl == "ALL" and not cl == "LOCAL_QUORUM" and not cl == "QUORUM":
+    abort(400)
+  if cl == "ONE":
+    CL = ConsistencyLevel.ONE
+  if cl == "TWO":
+    CL = ConsistencyLevel.TWO
+  if cl == "LOCAL_QUORUM":
+    CL = ConsistencyLevel.LOCAL_QUORUM
+  if cl == "QUORUM":
+    CL = ConsistencyLevel.QUORUM
+  if cl == "ALL":
+    CL = ConsistencyLevel.ALL
+
+    #>>>>>>>>>>>>>>>>>>>>>>WRITESTREAM
+    def writeStream(targetCluster):
       coordinator = dc
       last_c = coordinator
       used_dc = dc
       #current = time.localtime()
 
       profile1 = ExecutionProfile( load_balancing_policy=DCAwareRoundRobinPolicy(local_dc=dc, used_hosts_per_remote_dc=3),
-                            speculative_execution_policy=ConstantSpeculativeExecutionPolicy(.05, 20),
-                            consistency_level = CL
-                            )
+                                  speculative_execution_policy=ConstantSpeculativeExecutionPolicy(.05, 20),
+                                  consistency_level = CL
+      )
 
       print "Connecting to cluster"
+
       if (targetCluster == "DDAC"):
         contactpoints = ddaccontactpoints
       else: 
         contactpoints = osscontactpoints
 
       cluster = Cluster( contact_points=contactpoints,
-                    auth_provider=auth_provider,
-                    ssl_options=ssl_opts,
-                    execution_profiles={EXEC_PROFILE_DEFAULT: profile1},
+                        auth_provider=auth_provider,
+                        ssl_options=ssl_opts,
+                        execution_profiles={EXEC_PROFILE_DEFAULT: profile1},
       )
 
       session = cluster.connect()
@@ -131,86 +137,90 @@ def writev0():
       x = 0
       y = 0
       while x <= count:
-         r = {} #Results Dictionary
-         current = time.localtime()
-         bucket = str(current.tm_year) + str(current.tm_mon) + str(current.tm_mday) + str(current.tm_hour) + str(current.tm_min)
-         r["d"] = time.strftime('%Y-%m-%dT%H:%M:%S', current)
-         data1 = randint(1,100)
-         data2 = randint(1,100)
-         data3 = randint(1,100)
-         query = """ INSERT INTO demo.table2 (bucket, ts, d, data1, data2, data3) VALUES ('%s', now(), '%s', '%s', '%s', '%s') """ % (str(bucket), str(r["d"]), str(data1), str(data2), str(data3))
-         writefail = 0
-         r["result"] = "Successful"
-         try:
-            session.execute(query)
-         except Exception as e:
-            print ("Write failed.")
-            writefail = 1
+        r = {} #Results Dictionary
+        current = time.localtime()
+        bucket = str(current.tm_year) + str(current.tm_mon) + str(current.tm_mday) + str(current.tm_hour) + str(current.tm_min)
+        r["d"] = time.strftime('%Y-%m-%dT%H:%M:%S', current)
+        data1 = randint(1,100)
+        data2 = randint(1,100)
+        data3 = randint(1,100)
+        query = """ INSERT INTO demo.table2 (bucket, ts, d, data1, data2, data3) VALUES ('%s', now(), '%s', '%s', '%s', '%s') """ % (str(bucket), str(r["d"]), str(data1), str(data2), str(data3))
+        writefail = 0
+        r["result"] = "Successful"
+        try:
+          session.execute(query)
+        except Exception as e:
+          print ("Write failed.")
+          writefail = 1
+          for i in e:
+            errormsg = i
+            errormsg = str(errormsg).replace('"', '')
+          r["count"] = x
+          r["dc"] = used_dc
+          r["result"] = errormsg
+          yield json.dumps(r) + "\r\n"
+        if writefail == 1:
+          cluster.shutdown() 
+          return
+          yield
+        if(y == rowcount):
+          y = 0
+          try:
+            future = session.execute_async (query, trace=True )
+            result = future.result()
+            try:
+              trace = future.get_query_trace(1)
+              coordinator =  trace.coordinator
+            except:
+              coordinator = last_c
+            for h in session.hosts:
+              if h.address == coordinator:
+                  used_dc = h.datacenter
+            r["count"] = x
+            r["dc"] = used_dc
+            yield json.dumps(r) + "\r\n"
+          except Exception as e:
             for i in e:
-               errormsg = i
-               errormsg = str(errormsg).replace('"', '')
+              errormsg = i
+              errormsg = str(errormsg).replace('"', '')
+            print ("Trace failed.")
             r["count"] = x
             r["dc"] = used_dc
             r["result"] = errormsg
             yield json.dumps(r) + "\r\n"
-         if writefail == 1:
             cluster.shutdown() 
-            return
-            yield
-         if(y == rowcount):
-            y = 0
-            try:
-               future = session.execute_async (query, trace=True )
-               result = future.result()
-               try:
-                  trace = future.get_query_trace(1)
-                  coordinator =  trace.coordinator
-               except:
-                  coordinator = last_c
-               for h in session.hosts:
-                  if h.address == coordinator:
-                     used_dc = h.datacenter
-               r["count"] = x
-               r["dc"] = used_dc
-               yield json.dumps(r) + "\r\n"
-            except Exception as e:
-               for i in e:
-                  errormsg = i
-                  errormsg = str(errormsg).replace('"', '')
-               print ("Trace failed.")
-               r["count"] = x
-               r["dc"] = used_dc
-               r["result"] = errormsg
-               yield json.dumps(r) + "\r\n"
-               cluster.shutdown() 
 
-         time.sleep(.03)  # an artificial delay
-         x = x + 1
-         y = y + 1
+          time.sleep(.03)  # an artificial delay
+          x = x + 1
+          y = y + 1
       cluster.shutdown()
-   return Response(writeStream(targetCluster), content_type='application/stream+json')
+    return Response(writeStream(targetCluster), content_type='application/stream+json')
 
 
+#>>>>>>>>>>>>>>>>>>>>>>>READ
 @app.route('/demo/read', methods=['POST'])
 def read():
-   if not request.json or not 'count' in request.json or not 'dc' in request.json or not 'cl' in request.json:
-      abort(400)
-   dc = request.json['dc']
-   count = request.json['count']
-   cl = request.json['cl']
-   if not cl == "ONE" and not cl == "TWO" and not cl == "ALL" and not cl == "LOCAL_QUORUM" and not cl == "QUORUM":
-      abort(400)
-   if cl == "ONE":
-      CL = ConsistencyLevel.ONE
-   if cl == "TWO":
-      CL = ConsistencyLevel.TWO
-   if cl == "LOCAL_QUORUM":
-      CL = ConsistencyLevel.LOCAL_QUORUM
-   if cl == "QUORUM":
-      CL = ConsistencyLevel.QUORUM
-   if cl == "ALL":
-      CL = ConsistencyLevel.ALL
-   def readStream():
+  if not request.json or not 'count' in request.json or not 'dc' in request.json or not 'cl' in request.json or not 'targetCluster' in request.json:
+    abort(400)
+  dc = request.json['dc']
+  count = request.json['count']
+  targetCluster = request.json['targetCluster']
+  cl = request.json['cl']
+  if not cl == "ONE" and not cl == "TWO" and not cl == "ALL" and not cl == "LOCAL_QUORUM" and not cl == "QUORUM":
+    abort(400)
+  if cl == "ONE":
+    CL = ConsistencyLevel.ONE
+  if cl == "TWO":
+    CL = ConsistencyLevel.TWO
+  if cl == "LOCAL_QUORUM":
+    CL = ConsistencyLevel.LOCAL_QUORUM
+  if cl == "QUORUM":
+    CL = ConsistencyLevel.QUORUM
+  if cl == "ALL":
+    CL = ConsistencyLevel.ALL
+
+    #>>>>>>>>>>>>>>>>>>>>>>WRITESTREAM
+    def readStream(targetCluster):
       coordinator = dc
       last_c = coordinator
       used_dc = dc
@@ -218,102 +228,106 @@ def read():
       bucket = str(current.tm_year) + str(current.tm_mon) + str(current.tm_mday) + str(current.tm_hour) + str(current.tm_min)
 
       profile1 = ExecutionProfile( load_balancing_policy=DCAwareRoundRobinPolicy(local_dc=dc, used_hosts_per_remote_dc=3),
-                            speculative_execution_policy=ConstantSpeculativeExecutionPolicy(.05, 20),
-                            consistency_level = CL
-                            )
+                                  speculative_execution_policy=ConstantSpeculativeExecutionPolicy(.05, 20),
+                                  consistency_level = CL
+      )
 
       print "Connecting to cluster"
 
-      cluster = Cluster( contact_points=ddaccontactpoints,
-                    auth_provider=auth_provider,
-                    ssl_options=ssl_opts,
-                    execution_profiles={EXEC_PROFILE_DEFAULT: profile1},
-      )
-      cluster = Cluster( contact_points=osscontactpoints,
-                    auth_provider=auth_provider,
-                    ssl_options=ssl_opts,
-                    execution_profiles={EXEC_PROFILE_DEFAULT: profile1},
-      )
+      if (targetCluster == "DDAC"):
+        contactpoints = ddaccontactpoints
+      else: 
+        contactpoints = osscontactpoints
 
+      cluster = Cluster( contact_points=contactpoints,
+                        auth_provider=auth_provider,
+                        ssl_options=ssl_opts,
+                        execution_profiles={EXEC_PROFILE_DEFAULT: profile1},
+      )
 
       session = cluster.connect()
 
       x = 0
       y = 0
       while x <= count:
-         r = {} #Results Dictionary
-         current = time.localtime()
-         bucket = str(current.tm_year) + str(current.tm_mon) + str(current.tm_mday) + str(current.tm_hour) + str(current.tm_min)
-         #r["d"] = time.strftime('%Y-%m-%dT%H:%M:%S', current)
-         query = """ select * from demo.table2 where bucket = '%s' limit 1 """ % (bucket)
-         readfail = 0
-         r["result"] = "Successful"
-         try:
-            results = session.execute (query)
-         except Exception as e:
-            print ("Read failed.")
-            readfail = 1
+        r = {} #Results Dictionary
+        current = time.localtime()
+        bucket = str(current.tm_year) + str(current.tm_mon) + str(current.tm_mday) + str(current.tm_hour) + str(current.tm_min)
+        #r["d"] = time.strftime('%Y-%m-%dT%H:%M:%S', current)
+        query = """ select * from demo.table2 where bucket = '%s' limit 1 """ % (bucket)
+        readfail = 0
+        r["result"] = "Successful"
+        try:
+          results = session.execute (query)
+        except Exception as e:
+          print ("Read failed.")
+          readfail = 1
+          for i in e:
+            errormsg = i
+            errormsg = str(errormsg).replace('"', '')
+          r["count"] = x
+          r["dc"] = used_dc
+          r["result"] = errormsg
+          r["d"] = "00:00:00"
+          yield json.dumps(r) + "\r\n"
+        if readfail == 1:
+          cluster.shutdown()
+          return
+          yield
+
+        for row in results:
+          r["d"] = row.d
+
+        if(y == rowcount):
+          y = 0
+          try:
+            future = session.execute_async (query, trace=True )
+            result = future.result()
+            try:
+              trace = future.get_query_trace( 1 )
+              coordinator =  trace.coordinator
+            except:
+              coordinator = last_c
+            for h in session.hosts:
+              if h.address == coordinator:
+                used_dc = h.datacenter
+            r["count"] = x
+            r["dc"] = used_dc
+            yield json.dumps(r) + "\r\n"
+          except Exception as e:
             for i in e:
-               errormsg = i
-               errormsg = str(errormsg).replace('"', '')
+              errormsg = i
+              errormsg = str(errormsg).replace('"', '')
+            print ("Read trace failed.")
             r["count"] = x
             r["dc"] = used_dc
             r["result"] = errormsg
-            r["d"] = "00:00:00"
             yield json.dumps(r) + "\r\n"
-         if readfail == 1:
             cluster.shutdown()
-            return
-            yield
 
-         for row in results:
-            r["d"] = row.d
-
-         if(y == rowcount):
-            y = 0
-            try:
-               future = session.execute_async (query, trace=True )
-               result = future.result()
-               try:
-                  trace = future.get_query_trace( 1 )
-                  coordinator =  trace.coordinator
-               except:
-                  coordinator = last_c
-               for h in session.hosts:
-                  if h.address == coordinator:
-                     used_dc = h.datacenter
-               r["count"] = x
-               r["dc"] = used_dc
-               yield json.dumps(r) + "\r\n"
-            except Exception as e:
-               for i in e:
-                  errormsg = i
-                  errormsg = str(errormsg).replace('"', '')
-               print ("Read trace failed.")
-               r["count"] = x
-               r["dc"] = used_dc
-               r["result"] = errormsg
-               yield json.dumps(r) + "\r\n"
-               cluster.shutdown()
-
-         time.sleep(.03)  # an artificial delay
-         x = x + 1
-         y = y + 1
+          time.sleep(.03)  # an artificial delay
+          x = x + 1
+          y = y + 1
       cluster.shutdown()
-   return Response(readStream(), content_type='application/stream+json')
+    return Response(readStream(), content_type='application/stream+json')
 
 
+#>>>>>>>>>>>>>>>>>>>>>>>NODEFULL
 @app.route('/demo/nodefull', methods=['GET'])
 def nodefull():
+  if ():
     n = ddaccontactpoints.split(",")[0]
-    #combine with nodetool status of oss
-    
+  else:
+    n = osscontactpoints
+
     k = paramiko.RSAKey.from_private_key_file(keyfile)
     c = paramiko.SSHClient()
     c.set_missing_host_key_policy(paramiko.AutoAddPolicy())
     c.connect( hostname = n, username = username, pkey = k )
     stdin , stdout, stderr = c.exec_command("nodeful status")
     return stdout
+
+
 
 
 if __name__ == '__main__':
