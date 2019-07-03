@@ -128,7 +128,7 @@ class BottomMenu extends React.Component{
 
                                 <Button variant="contained" color="secondary" className={classes.button} size="large" onClick={() => {this.props.getReads()}}>LAUNCH APP</Button>
 
-                                <Button variant="contained" color="secondary" className={classes.button} size="large" onClick={() => {this.props.dropOneNode()}}>CHANGE CLUSTER</Button>
+                                <Button variant="contained" color="secondary" className={classes.button} size="large" onClick={() => {this.props.dropOneNode()}}>TOGGLE CLUSTERS</Button>
                             </div>
                         </Paper>
                     </Drawer>

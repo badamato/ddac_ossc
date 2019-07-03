@@ -44,7 +44,12 @@ else:
 
 
 #End Configuration
-profile1 = ExecutionProfile( load_balancing_policy=DCAwareRoundRobinPolicy(local_dc=localDC, used_hosts_per_remote_dc=3),
+profile1 = ExecutionProfile( load_balancing_policy=DCAwareRoundRobinPolicy(local_dc='dc0', used_hosts_per_remote_dc=0),
+                            speculative_execution_policy=ConstantSpeculativeExecutionPolicy(.05, 20),
+                            consistency_level = ConsistencyLevel.ONE
+)
+
+profile2 = ExecutionProfile( load_balancing_policy=DCAwareRoundRobinPolicy(local_dc='dc1', used_hosts_per_remote_dc=0),
                             speculative_execution_policy=ConstantSpeculativeExecutionPolicy(.05, 20),
                             consistency_level = ConsistencyLevel.ONE
 )
@@ -60,7 +65,7 @@ ddacCluster = Cluster( contact_points=ddaccontactpoints,
 ossCluster = Cluster( contact_points=osscontactpoints,
                     auth_provider=auth_provider,
                     ssl_options=ssl_opts,
-                    execution_profiles={EXEC_PROFILE_DEFAULT: profile1},
+                    execution_profiles={EXEC_PROFILE_DEFAULT: profile2},
 )
 
 
@@ -315,8 +320,10 @@ def read():
 
 #>>>>>>>>>>>>>>>>>>>>>>>NODEFULL
 @app.route('/demo/nodefull', methods=['GET'])
+
 def nodefull():
-  n = [(ddaccontactpoints.split(",")[0]), (osscontactpoints.split(","))]
+  print(keyfile)
+  n = [(ddaccontactpoints[0]), (osscontactpoints[0])]
   k = paramiko.RSAKey.from_private_key_file(keyfile)
   c = paramiko.SSHClient()
   s = stdout
@@ -324,11 +331,9 @@ def nodefull():
   for points in n:
     c.set_missing_host_key_policy(paramiko.AutoAddPolicy())
     c.connect( hostname = n, username = username, pkey = k )
-    stdin, s, stderr = c.exec_command("nodetool status")
+    stdin, stdout, stderr = c.exec_command("nodetool status")
 
   return s
-
-
 
 
 if __name__ == '__main__':

@@ -4,11 +4,12 @@ import { withStyles } from '@material-ui/core/styles';
 import Grid from '@material-ui/core/Grid';
 import Card from '@material-ui/core/Card';
 import CardActionArea from '@material-ui/core/CardActionArea';
+import CardActions from '@material-ui/core/CardActions';
 import CardContent from '@material-ui/core/CardContent';
 import CardMedia from '@material-ui/core/CardMedia';
 import Typography from '@material-ui/core/Typography';
+import Button from '@material-ui/core/Button';
 import Paper from '@material-ui/core/Paper';
-import ddacimg from '../images/ddac.png'
 
 
 import Table from '@material-ui/core/Table';
@@ -28,25 +29,22 @@ import { grey } from '@material-ui/core/colors';
 
 const styles = theme => ({
     root: {
-        // overflowX: 'auto',
-        // overflowY: 'hidden',
-        // height: '30vh',
         flexGrow: 1,
     },
-    tablecell: {
-        fontSize: '45px',
-    },
-    clusterPaper: {
-        borderRadius: '3px',
-        height: '400px',
-        backgroundColor: '#f8f8f8',
-        margin: '10px',
-    },
+    // clusterPaper: {
+    //     borderRadius: '3px',
+    //     height: '400px',
+    //     width: '80%',
+    //     backgroundColor: '#f8f8f8',
+    //     margin: '10px',
+    // },
     clusterCard: {
-      maxWidth: '360px'
+      maxWidth: '550px',
+      margin: '15px auto'
     },
     clusterMedia: {
-      height: '140px'
+      height: '120px',
+      backgroundSize: 'contain',
     }
 });
 
@@ -160,26 +158,33 @@ class Dashboard extends React.Component {
 
         return (
           <div className={classes.root}>
-            <Grid container spacing={8}>
+            <Grid container spacing={24}>
               <Grid item xs={6}>
                 {/* <Paper className={classes.clusterPaper}> */}
                   <Card className={classes.clusterCard}>
                     <CardActionArea>
                       <CardMedia
                         className={classes.clusterMedia}
-                        image="../images/ddac.png"
+                        image={require('../images/ddac.png')}
                         title="DDAC"
+                        style={{marginTop: '10px'}}
                       />
-                      <ddacimg />
                       <CardContent>
-                        <Typography gutterBottom variant="h5" component="h2">
+                        {/* <Typography gutterBottom variant="h5" component="h2">
                           DDAC
-                        </Typography>
-                        <Typography variant="body2" color="textSecondary" component="p">
-                          Lorem ipsum dolor sit amet consectetur adipisicing elit. Ab eveniet repudiandae praesentium natus velit facere officiis expedita, inventore qui delectus dignissimos cupiditate molestias illum exercitationem quidem in, sequi sed quos.
+                        </Typography> */}
+                        <Typography variant="body2" color="textSecondary" component="p" style={{height: '180px'}}>
+
+
                         </Typography>
                       </CardContent>
                     </CardActionArea>
+                    <CardActions>
+                      <Button size="small" color="primary" variant='outlined'>
+                        Select Cluster
+                      </Button>
+
+                    </CardActions>
                   </Card>
                 {/* </Paper> */}
               </Grid>
@@ -190,18 +195,25 @@ class Dashboard extends React.Component {
                     <CardActionArea>
                       <CardMedia
                         className={classes.clusterMedia}
-                        image="../images/ddac.png"
-                        title="DDAC"
+                        image={require('../images/cassandra.png')}
+                        title="OSSC"
+                        style={{marginTop: '10px'}}
                       />
-                      <CardContent>
-                        <Typography gutterBottom variant="h5" component="h2">
+                      <CardContent className={classes.clusterCardBody}>
+                        {/* <Typography gutterBottom variant="h5" component="h2">
                           OSS Cassandra
-                        </Typography>
-                        <Typography variant="body2" color="textSecondary" component="p">
-                          Lorem ipsum dolor sit amet consectetur adipisicing elit. Ab eveniet repudiandae praesentium natus velit facere officiis expedita, inventore qui delectus dignissimos cupiditate molestias illum exercitationem quidem in, sequi sed quos.
+                        </Typography> */}
+                        <Typography variant="body2" color="textSecondary" component="p" style={{height: '180px'}}>
+
+
                         </Typography>
                       </CardContent>
                     </CardActionArea>
+                    <CardActions>
+                        <Button size="small" color="primary" variant='outlined'>
+                          Select Cluster
+                        </Button>
+                    </CardActions>
                   </Card>
                 {/* </Paper> */}
               </Grid>

@@ -15,7 +15,7 @@ class MainPage extends Component {
             <div className={"gridroot"}>
                 <Grid container justify='center' >
                     <Grid item xs={12}>
-                        <Paper className={"paperdash"}>
+                        <Paper className={"paperdash"} style={{backgroundColor: '#f6fbfc'}}>
                             <Dashboard />
                         </Paper>
                     </Grid>
