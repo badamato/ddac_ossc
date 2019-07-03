@@ -13,7 +13,7 @@ class ReadCard extends React.Component {
         return (
             <div className={"root"}>
                 <Card className={"classes"}>
-                    <CardHeader className={"cardheader"} style={{paddingTop: '20px', backgroundColor: 'silver'}}>BROWSING CATALOG</CardHeader>
+                    <CardHeader className={"cardheader"} style={{paddingTop: '11px', paddingBottom: '11px', backgroundColor: '#d8d8d8', marginTop: '-12px'}}>BROWSING CATALOG</CardHeader>
                     <CardBody className={"cardbody"}>
                         <div className={"cardtext"}>
                             {

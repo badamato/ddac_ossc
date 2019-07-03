@@ -20,7 +20,7 @@ class EventsCard extends React.Component {
             return (
                 <div className={"root"}>
                     <Card className={"card"} style={{marginBottom: '130px'}}>
-                        <CardHeader className={"cardheader"} style={{paddingTop: '20px', backgroundColor: 'silver'}}>EVENTS</CardHeader>
+                        <CardHeader className={"cardheader"} style={{paddingTop: '11px', paddingBottom: '11px', backgroundColor: '#d8d8d8', marginTop: '-12px'}}>EVENTS</CardHeader>
                         <CardBody className={"cardbody"}>
                             <div className={"cardtext"}>
                                 {

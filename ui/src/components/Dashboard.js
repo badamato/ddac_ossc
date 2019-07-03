@@ -173,7 +173,7 @@ class Dashboard extends React.Component {
                         {/* <Typography gutterBottom variant="h5" component="h2">
                           DDAC
                         </Typography> */}
-                        <Typography variant="body2" color="textSecondary" component="p" style={{height: '180px'}}>
+                        <Typography variant="body2" color="textSecondary" component="p" style={{height: '200px'}}>
 
 
                         </Typography>
@@ -203,7 +203,7 @@ class Dashboard extends React.Component {
                         {/* <Typography gutterBottom variant="h5" component="h2">
                           OSS Cassandra
                         </Typography> */}
-                        <Typography variant="body2" color="textSecondary" component="p" style={{height: '180px'}}>
+                        <Typography variant="body2" color="textSecondary" component="p" style={{height: '200px'}}>
 
 
                         </Typography>

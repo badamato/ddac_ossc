@@ -36,7 +36,7 @@ const styles = theme => ({
         paddingRight: theme.spacing.unit * 2,
     },
     paper: {
-        height: '75px',
+        height: '62px',
         // paddingTop: '55px',
         paddingBottom: '50px',
         backgroundColor: 'white',
@@ -84,7 +84,7 @@ const styles = theme => ({
         justifyContent: 'center',
     },
     button: {
-        margin: '10px 40px',
+        margin: '3px 40px',
         color: 'contrast',
     },
     title: {
