@@ -21,17 +21,33 @@ import { grey } from '@material-ui/core/colors';
 
 const styles = theme => ({
     root: {
-        overflowX: 'auto',
-        overflowY: 'hidden',
-        height: '30vh',
+        // overflowX: 'auto',
+        // overflowY: 'hidden',
+        // height: '30vh',
         flexGrow: 1,
     },
     tablecell: {
         fontSize: '45px',
     },
-    clusterCard: {
-        backgroundColor: 'grey',
-        borderRadius: '3px'
+    clusterPaper: {
+        borderRadius: '3px',
+        height: '400px',
+        border: '1px dotted grey',
+        margin: '10px'
+    },
+    ddacLogoContainer: {
+      width: '150px',
+      height: '80px',
+      position: 'absolute',
+      border: '1px solid grey',
+    },
+    osscLogoContainer: {
+      width: '150px',
+      height: '80px',
+      position: 'absolute',
+      border: '1px solid grey',
+      backgroundColor: '#f7f7f7',
+      padding: '0 0 0 30px'
     }
 });
 
@@ -144,8 +160,21 @@ class Dashboard extends React.Component {
         })
 
         return (
-          <div className={classes.clusterCard}>
-            some text
+          <div className={classes.root}>
+            <Grid container spacing={8}>
+              <Grid item xs={6}>
+                <div className={classes.ddacLogoContainer}>
+                  <img src={require('../images/ddac.png')} />
+                </div>
+                <Paper className={classes.clusterPaper}></Paper>
+              </Grid>
+              <Grid item xs={6}>
+                <div className={classes.osscLogoContainer}>
+                  <img src={require('../images/cassandra.png')} />
+                </div>
+                <Paper className={classes.clusterPaper}></Paper>
+              </Grid>
+            </Grid>
           </div>
             //     <div className={
             //     (this.props.fullscreen === "dc-paper") ?  

@@ -37,7 +37,7 @@ class TopMenu extends React.Component {
             <AppBar position="static">
                 <Toolbar>
                     <div className={classes.logo}>
-                        <img style={{height: '100px'}}src={require('../images/logo-white.png')} />
+                        <img style={{height: '100px'}} src={require('../images/logo-white.png')} />
                     </div>
                     <Typography className={classes.title} variant="h4" color="inherit" noWrap>
                         DDAC & OSS Cassandra
