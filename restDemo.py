@@ -24,7 +24,7 @@ config.read('demo.ini')
 #Configuration
 
 ddaccontactpoints = config.get('CONFIG','ddaccontactpoints').split(',')
-osscontactpoints = config.get('CONFIG','osscontactpoints')
+osscontactpoints = config.get('CONFIG','osscontactpoints').split(',')
 localDC = config.get('KHAOS','localDC')
 username = config.get('KHAOS','sshusername')
 keyfile = config.get('KHAOS','sshkeyfile')
@@ -66,6 +66,7 @@ ossCluster = Cluster( contact_points=osscontactpoints,
 
 ddacSession = ddacCluster.connect()
 ossSession = ossCluster.connect()
+
 print "Connected to cluster"
 
 ddacSession.execute (ks_query)
@@ -315,17 +316,18 @@ def read():
 #>>>>>>>>>>>>>>>>>>>>>>>NODEFULL
 @app.route('/demo/nodefull', methods=['GET'])
 def nodefull():
-  if ():
-    n = ddaccontactpoints.split(",")[0]
-  else:
-    n = osscontactpoints
+  n = [(ddaccontactpoints.split(",")[0]), (osscontactpoints.split(","))]
+  k = paramiko.RSAKey.from_private_key_file(keyfile)
+  c = paramiko.SSHClient()
+  s = stdout
 
-    k = paramiko.RSAKey.from_private_key_file(keyfile)
-    c = paramiko.SSHClient()
+  for points in n:
     c.set_missing_host_key_policy(paramiko.AutoAddPolicy())
     c.connect( hostname = n, username = username, pkey = k )
-    stdin , stdout, stderr = c.exec_command("nodeful status")
-    return stdout
+    stdin, stderr = c.exec_command("nodetool status")
+    return n
+
+  return stdout
 
 
 

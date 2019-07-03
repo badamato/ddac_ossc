@@ -145,7 +145,7 @@ class Dashboard extends React.Component {
                 }>
                 { !this.props.mapView ?
                     <div className="spanningDiv">
-                        <Button 
+                        {/* <Button 
                             variant="contained" 
                             color="secondary" 
                             className={"button"} 
@@ -153,7 +153,7 @@ class Dashboard extends React.Component {
                             onClick={() => {this.props.updateValue("mapView", !this.props.mapView)}}
                         >
                         Map
-                        </Button>
+                        </Button> */}
                         <Table className={classes.table}>
                             <TableHead style={{backgroundColor: 'silver'}}>
                                 <TableRow>

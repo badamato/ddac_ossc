@@ -303,4 +303,5 @@ export const updateData = (type, data) => {
     }
 }
 
-export default {writeApi, readApi, readChunk, getDataCenter, getNodeInfo, dropOneNode, dropOneDataCenter, resetAllNodes, rollingRestart, snackbarToggle, updateValue, appendValue, updateData};
+// export default {writeApi, readApi, readChunk, getDataCenter, getNodeInfo, dropOneNode, dropOneDataCenter, resetAllNodes, rollingRestart, snackbarToggle, updateValue, appendValue, updateData};
+export default {writeApi, readApi, getNodeInfo, updateValue, appendValue, updateData};
