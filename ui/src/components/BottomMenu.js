@@ -36,8 +36,8 @@ const styles = theme => ({
         paddingRight: theme.spacing.unit * 2,
     },
     paper: {
-        height: '80px',
-        paddingTop: '15px',
+        height: '75px',
+        // paddingTop: '55px',
         paddingBottom: '50px',
         backgroundColor: 'white',
     },
@@ -81,11 +81,10 @@ const styles = theme => ({
     controlContainer: {
         width: '100%',
         display: 'flex',
-        marginBottom: '20px',
-        justifyContent: 'space-between',
+        justifyContent: 'center',
     },
     button: {
-        margin: theme.spacing.unit,
+        margin: '10px 40px',
         color: 'contrast',
     },
     title: {

@@ -1,6 +1,7 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import { withStyles } from '@material-ui/core/styles';
+import Grid from '@material-ui/core/Grid';
 import Table from '@material-ui/core/Table';
 import TableBody from '@material-ui/core/TableBody';
 import TableCell from '@material-ui/core/TableCell';
@@ -15,6 +16,7 @@ import FullscreenIcon from '@material-ui/icons/Fullscreen';
 import FullscreenExitIcon from '@material-ui/icons/FullscreenExit';
 
 import {updateValue, getNodeInfo, writeApi, getDataCenter} from '../actions/actions'
+import { grey } from '@material-ui/core/colors';
 
 
 const styles = theme => ({
@@ -22,10 +24,15 @@ const styles = theme => ({
         overflowX: 'auto',
         overflowY: 'hidden',
         height: '30vh',
+        flexGrow: 1,
     },
     tablecell: {
         fontSize: '45px',
     },
+    clusterCard: {
+        backgroundColor: 'grey',
+        borderRadius: '3px'
+    }
 });
 
 class Dashboard extends React.Component {
@@ -137,80 +144,83 @@ class Dashboard extends React.Component {
         })
 
         return (
-                <div className={
-                (this.props.fullscreen === "dc-paper") ?  
-                    "dashboardroot-full" 
-                : 
-                    "dashboardroot"
-                }>
-                { !this.props.mapView ?
-                    <div className="spanningDiv">
-                        {/* <Button 
-                            variant="contained" 
-                            color="secondary" 
-                            className={"button"} 
-                            size="large" 
-                            onClick={() => {this.props.updateValue("mapView", !this.props.mapView)}}
-                        >
-                        Map
-                        </Button> */}
-                        <Table className={classes.table}>
-                            <TableHead style={{backgroundColor: 'silver'}}>
-                                <TableRow>
-                                    <TableCell className={classes.tablecell} style={{color: 'black', fontSize: '25px'}}>NODE</TableCell>
-                                    <TableCell className={classes.tablecell} style={{color: 'black', fontSize: '25px'}} align='center'>ONLINE</TableCell>
-                                    <TableCell className={classes.tablecell} style={{color: 'black', fontSize: '25px'}} align='center'>STARTING</TableCell>
-                                    <TableCell className={classes.tablecell} style={{color: 'black', fontSize: '25px'}} align='center'>OFFLINE</TableCell>
-                                    <TableCell className={classes.tablecell} style={{color: 'black', fontSize: '25px'}} align='center'>
-                                        { this.props.fullscreen != "dc-paper" ? 
-                                                <IconButton 
-                                                    color="primary" 
-                                                    onClick={() => { this.props.updateValue("fullscreen", "dc-paper")}} 
-                                                    className={classes.menuButton}  
-                                                    aria-label="Fullscreen"
-                                                >
-                                                    <FullscreenIcon />
-                                                </IconButton>
-                                                : 
-                                                <IconButton 
-                                                    onClick={() => { this.props.updateValue("fullscreen", "")}} 
-                                                    className={classes.menuButton} 
-                                                    color="primary" 
-                                                    aria-label="Fullscreen Exit"
-                                                >
-                                                    <FullscreenExitIcon />
-                                                </IconButton>
-                                        } </TableCell>
-                                </TableRow>
-                            </TableHead>
-                        <TableBody>
-                            {dataCenterDetails.map ((detail, id) => {
-                                return (
-                                    <TableRow key={id}>
-                                        <TableCell style={{fontSize: '30px', color: 'gray'}} className={classes.tablecell}>{detail.name}</TableCell>
-                                        <TableCell style={{color: 'limegreen'}} className={classes.tablecell} align='center'>{detail.countUp}</TableCell>
-                                        <TableCell style={{color: '#ffc966'}} className={classes.tablecell} align='center'>{detail.starting}</TableCell>
-                                        <TableCell style={{color: 'red'}} className={classes.tablecell} align='center'>{detail.countDown + detail.stopping}</TableCell>
-                                    </TableRow>
-                                    )
-                                })}
-                        </TableBody>
-                    </Table>
-                    </div>
-                    : <div className={"spanningDiv"} onWheel = {(e) => this.handleWheel(e)} >
-                        <Button 
-                            variant="contained" 
-                            color="secondary" 
-                            className={"button"} 
-                            size="large" 
-                            onClick={() => {this.props.updateValue("mapView", !this.props.mapView)}}
-                        >
-                        Table
-                        </Button>
-                        <DataCenterMapContainer/>
-                    </div>
-                }
-            </div>
+          <div className={classes.clusterCard}>
+            some text
+          </div>
+            //     <div className={
+            //     (this.props.fullscreen === "dc-paper") ?  
+            //         "dashboardroot-full" 
+            //     : 
+            //         "dashboardroot"
+            //     }>
+            //     { !this.props.mapView ?
+            //         <div className="spanningDiv">
+            //             <Button 
+            //                 variant="contained" 
+            //                 color="secondary" 
+            //                 className={"button"} 
+            //                 size="large" 
+            //                 onClick={() => {this.props.updateValue("mapView", !this.props.mapView)}}
+            //             >
+            //             Map
+            //             </Button>
+            //             <Table className={classes.table}>
+            //                 <TableHead style={{backgroundColor: 'silver'}}>
+            //                     <TableRow>
+            //                         <TableCell className={classes.tablecell} style={{color: 'black', fontSize: '25px'}}>NODE</TableCell>
+            //                         <TableCell className={classes.tablecell} style={{color: 'black', fontSize: '25px'}} align='center'>ONLINE</TableCell>
+            //                         <TableCell className={classes.tablecell} style={{color: 'black', fontSize: '25px'}} align='center'>STARTING</TableCell>
+            //                         <TableCell className={classes.tablecell} style={{color: 'black', fontSize: '25px'}} align='center'>OFFLINE</TableCell>
+            //                         <TableCell className={classes.tablecell} style={{color: 'black', fontSize: '25px'}} align='center'>
+            //                             { this.props.fullscreen != "dc-paper" ? 
+            //                                     <IconButton 
+            //                                         color="primary" 
+            //                                         onClick={() => { this.props.updateValue("fullscreen", "dc-paper")}} 
+            //                                         className={classes.menuButton}  
+            //                                         aria-label="Fullscreen"
+            //                                     >
+            //                                         <FullscreenIcon />
+            //                                     </IconButton>
+            //                                     : 
+            //                                     <IconButton 
+            //                                         onClick={() => { this.props.updateValue("fullscreen", "")}} 
+            //                                         className={classes.menuButton} 
+            //                                         color="primary" 
+            //                                         aria-label="Fullscreen Exit"
+            //                                     >
+            //                                         <FullscreenExitIcon />
+            //                                     </IconButton>
+            //                             } </TableCell>
+            //                     </TableRow>
+            //                 </TableHead>
+            //             <TableBody>
+            //                 {dataCenterDetails.map ((detail, id) => {
+            //                     return (
+            //                         <TableRow key={id}>
+            //                             <TableCell style={{fontSize: '30px', color: 'gray'}} className={classes.tablecell}>{detail.name}</TableCell>
+            //                             <TableCell style={{color: 'limegreen'}} className={classes.tablecell} align='center'>{detail.countUp}</TableCell>
+            //                             <TableCell style={{color: '#ffc966'}} className={classes.tablecell} align='center'>{detail.starting}</TableCell>
+            //                             <TableCell style={{color: 'red'}} className={classes.tablecell} align='center'>{detail.countDown + detail.stopping}</TableCell>
+            //                         </TableRow>
+            //                         )
+            //                     })}
+            //             </TableBody>
+            //         </Table>
+            //         </div>
+            //         : <div className={"spanningDiv"} onWheel = {(e) => this.handleWheel(e)} >
+            //             <Button 
+            //                 variant="contained" 
+            //                 color="secondary" 
+            //                 className={"button"} 
+            //                 size="large" 
+            //                 onClick={() => {this.props.updateValue("mapView", !this.props.mapView)}}
+            //             >
+            //             Table
+            //             </Button>
+            //             <DataCenterMapContainer/>
+            //         </div>
+            //     }
+            // </div>
         );
     }
 }
