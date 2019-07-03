@@ -324,10 +324,9 @@ def nodefull():
   for points in n:
     c.set_missing_host_key_policy(paramiko.AutoAddPolicy())
     c.connect( hostname = n, username = username, pkey = k )
-    stdin, stderr = c.exec_command("nodetool status")
-    return n
+    stdin, s, stderr = c.exec_command("nodetool status")
 
-  return stdout
+  return s
 
 
 

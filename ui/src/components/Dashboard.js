@@ -2,13 +2,20 @@ import React from 'react';
 import { connect } from 'react-redux';
 import { withStyles } from '@material-ui/core/styles';
 import Grid from '@material-ui/core/Grid';
+import Card from '@material-ui/core/Card';
+import CardActionArea from '@material-ui/core/CardActionArea';
+import CardContent from '@material-ui/core/CardContent';
+import CardMedia from '@material-ui/core/CardMedia';
+import Typography from '@material-ui/core/Typography';
+import Paper from '@material-ui/core/Paper';
+import ddacimg from '../images/ddac.png'
+
+
 import Table from '@material-ui/core/Table';
 import TableBody from '@material-ui/core/TableBody';
 import TableCell from '@material-ui/core/TableCell';
 import TableHead from '@material-ui/core/TableHead';
 import TableRow from '@material-ui/core/TableRow';
-import Paper from '@material-ui/core/Paper';
-import Button from '@material-ui/core/Button';
 
 import DataCenterMapContainer from './DataCenterMap';
 import IconButton from '@material-ui/core/IconButton';
@@ -32,22 +39,14 @@ const styles = theme => ({
     clusterPaper: {
         borderRadius: '3px',
         height: '400px',
-        border: '1px dotted grey',
-        margin: '10px'
+        backgroundColor: '#f8f8f8',
+        margin: '10px',
     },
-    ddacLogoContainer: {
-      width: '150px',
-      height: '80px',
-      position: 'absolute',
-      border: '1px solid grey',
+    clusterCard: {
+      maxWidth: '360px'
     },
-    osscLogoContainer: {
-      width: '150px',
-      height: '80px',
-      position: 'absolute',
-      border: '1px solid grey',
-      backgroundColor: '#f7f7f7',
-      padding: '0 0 0 30px'
+    clusterMedia: {
+      height: '140px'
     }
 });
 
@@ -163,16 +162,48 @@ class Dashboard extends React.Component {
           <div className={classes.root}>
             <Grid container spacing={8}>
               <Grid item xs={6}>
-                <div className={classes.ddacLogoContainer}>
-                  <img src={require('../images/ddac.png')} />
-                </div>
-                <Paper className={classes.clusterPaper}></Paper>
+                {/* <Paper className={classes.clusterPaper}> */}
+                  <Card className={classes.clusterCard}>
+                    <CardActionArea>
+                      <CardMedia
+                        className={classes.clusterMedia}
+                        image="../images/ddac.png"
+                        title="DDAC"
+                      />
+                      <ddacimg />
+                      <CardContent>
+                        <Typography gutterBottom variant="h5" component="h2">
+                          DDAC
+                        </Typography>
+                        <Typography variant="body2" color="textSecondary" component="p">
+                          Lorem ipsum dolor sit amet consectetur adipisicing elit. Ab eveniet repudiandae praesentium natus velit facere officiis expedita, inventore qui delectus dignissimos cupiditate molestias illum exercitationem quidem in, sequi sed quos.
+                        </Typography>
+                      </CardContent>
+                    </CardActionArea>
+                  </Card>
+                {/* </Paper> */}
               </Grid>
+
               <Grid item xs={6}>
-                <div className={classes.osscLogoContainer}>
-                  <img src={require('../images/cassandra.png')} />
-                </div>
-                <Paper className={classes.clusterPaper}></Paper>
+                {/* <Paper className={classes.clusterPaper}> */}
+                  <Card className={classes.clusterCard}>
+                    <CardActionArea>
+                      <CardMedia
+                        className={classes.clusterMedia}
+                        image="../images/ddac.png"
+                        title="DDAC"
+                      />
+                      <CardContent>
+                        <Typography gutterBottom variant="h5" component="h2">
+                          OSS Cassandra
+                        </Typography>
+                        <Typography variant="body2" color="textSecondary" component="p">
+                          Lorem ipsum dolor sit amet consectetur adipisicing elit. Ab eveniet repudiandae praesentium natus velit facere officiis expedita, inventore qui delectus dignissimos cupiditate molestias illum exercitationem quidem in, sequi sed quos.
+                        </Typography>
+                      </CardContent>
+                    </CardActionArea>
+                  </Card>
+                {/* </Paper> */}
               </Grid>
             </Grid>
           </div>
