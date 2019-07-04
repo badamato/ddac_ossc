@@ -9,6 +9,8 @@ import CardContent from '@material-ui/core/CardContent';
 import CardMedia from '@material-ui/core/CardMedia';
 import Typography from '@material-ui/core/Typography';
 import Button from '@material-ui/core/Button';
+import Divider from '@material-ui/core/Divider';
+
 import Paper from '@material-ui/core/Paper';
 
 
@@ -31,19 +33,12 @@ const styles = theme => ({
     root: {
         flexGrow: 1,
     },
-    // clusterPaper: {
-    //     borderRadius: '3px',
-    //     height: '400px',
-    //     width: '80%',
-    //     backgroundColor: '#f8f8f8',
-    //     margin: '10px',
-    // },
     clusterCard: {
       maxWidth: '550px',
       margin: '15px auto'
     },
     clusterMedia: {
-      height: '120px',
+      height: '70px',
       backgroundSize: 'contain',
     }
 });
@@ -159,63 +154,79 @@ class Dashboard extends React.Component {
         return (
           <div className={classes.root}>
             <Grid container spacing={24}>
-              <Grid item xs={6}>
-                {/* <Paper className={classes.clusterPaper}> */}
-                  <Card className={classes.clusterCard}>
-                    <CardActionArea>
-                      <CardMedia
-                        className={classes.clusterMedia}
-                        image={require('../images/ddac.png')}
-                        title="DDAC"
-                        style={{marginTop: '10px'}}
-                      />
-                      <CardContent>
-                        {/* <Typography gutterBottom variant="h5" component="h2">
-                          DDAC
-                        </Typography> */}
-                        <Typography variant="body2" color="textSecondary" component="p" style={{height: '200px'}}>
-
-
+              <Grid item xs={6} style={{padding: 0}}>
+                <Card className={classes.clusterCard}>
+                  <CardActionArea style={{padding: '10px'}}>
+                    <CardMedia
+                      className={classes.clusterMedia}
+                      image={require('../images/ddac.png')}
+                      title="DDAC"
+                      style={{marginTop: '10px', marginBottom: '10px'}}
+                    />
+                    <Divider variant='middle' />
+                    <CardContent>
+                      <div style={{display: 'flex', justifyContent: 'space-around', marginTop: '30px'}}>
+                        <Typography variant='h6' component='div' style={{color: '#ca5f14'}}>
+                          STATUS
                         </Typography>
-                      </CardContent>
-                    </CardActionArea>
-                    <CardActions>
+                        <Typography variant='h6' component='div' style={{color: '#ca5f14'}}>
+                          ACTIVITY
+                        </Typography>
+                      </div>
+                      <div style={{display: 'flex', justifyContent: 'space-around', textAlign: 'center'}}>
+                        <div style={{maxHeight: '100px', maxWidth: '200px', padding: '40px', fontSize: '90px'}}>
+                          UN
+                        </div>
+                        <div style={{maxHeight: '100px', maxWidth: '200px', padding: '90px'}}>
+                          meter here
+                        </div>
+                      </div>
+                    </CardContent>
+                  </CardActionArea>
+                  <CardActions>
+                    <Button size="small" color="primary" variant='outlined'>
+                      Select Cluster
+                    </Button>
+
+                  </CardActions>
+                </Card>
+              </Grid>
+
+              <Grid item xs={6} style={{padding: 0}}>
+                <Card className={classes.clusterCard}>
+                  <CardActionArea style={{padding: '10px'}}>
+                    <CardMedia
+                      className={classes.clusterMedia}
+                      image={require('../images/cassandra.png')}
+                      title="OSSC"
+                      style={{marginTop: '10px', marginBottom: '10px'}}
+                    />
+                    <Divider variant='middle' />
+                    <CardContent className={classes.clusterCardBody}>
+                      <div style={{display: 'flex', justifyContent: 'space-around', marginTop: '30px'}}>
+                          <Typography variant='h6' component='div' style={{color: '#ca5f14'}}>
+                            STATUS
+                          </Typography>
+                          <Typography variant='h6' component='div' style={{color: '#ca5f14'}}>
+                            ACTIVITY
+                          </Typography>
+                        </div>
+                        <div style={{display: 'flex', justifyContent: 'space-around', textAlign: 'center'}}>
+                          <div style={{maxHeight: '200px', maxWidth: '200px', padding: '40px', fontSize: '90px'}}>
+                            UN
+                          </div>
+                          <div style={{maxHeight: '200px', maxWidth: '200px', padding: '90px'}}>
+                            meter here
+                          </div>
+                        </div>
+                    </CardContent>
+                  </CardActionArea>
+                  <CardActions>
                       <Button size="small" color="primary" variant='outlined'>
                         Select Cluster
                       </Button>
-
-                    </CardActions>
-                  </Card>
-                {/* </Paper> */}
-              </Grid>
-
-              <Grid item xs={6}>
-                {/* <Paper className={classes.clusterPaper}> */}
-                  <Card className={classes.clusterCard}>
-                    <CardActionArea>
-                      <CardMedia
-                        className={classes.clusterMedia}
-                        image={require('../images/cassandra.png')}
-                        title="OSSC"
-                        style={{marginTop: '10px'}}
-                      />
-                      <CardContent className={classes.clusterCardBody}>
-                        {/* <Typography gutterBottom variant="h5" component="h2">
-                          OSS Cassandra
-                        </Typography> */}
-                        <Typography variant="body2" color="textSecondary" component="p" style={{height: '200px'}}>
-
-
-                        </Typography>
-                      </CardContent>
-                    </CardActionArea>
-                    <CardActions>
-                        <Button size="small" color="primary" variant='outlined'>
-                          Select Cluster
-                        </Button>
-                    </CardActions>
-                  </Card>
-                {/* </Paper> */}
+                  </CardActions>
+                </Card>
               </Grid>
             </Grid>
           </div>
