@@ -1,28 +1,10 @@
 import React from "react";
 import { connect } from 'react-redux';
-import { withStyles } from '@material-ui/core/styles';
 import ShoppingCartIcon from '@material-ui/icons/AddShoppingCart';
 import MoneyIcon from '@material-ui/icons/AttachMoney';
 import Card from 'material-kit-react/components/Card/Card';
 import CardHeader from 'material-kit-react/components/Card/CardHeader';
 import CardBody from 'material-kit-react/components/Card/CardBody';
-
-const styles = theme => ({
-    cardheader: {
-        backgroundColor: 'silver',
-        fontSize: '28px',
-        color: 'black',
-        textAlign: 'center',
-    },
-    cardbody: {
-        margin: '0 auto'
-    },
-    cardtext: {
-        height: '260px',
-        overflow: 'scroll',
-        fontSize: '22px',
-    }
-});
 
 
 class WriteCard extends React.Component {

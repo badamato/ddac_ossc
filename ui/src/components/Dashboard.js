@@ -48,32 +48,16 @@ class Dashboard extends React.Component {
         this.props.init();
     }
 
-    handleWheel(event) {
-        if (event.deltaY > 0) {
-            this.props.updateValue("mapZoom", this.props.mapZoom / 1.1)
-        }
-        if (event.deltaY < 0) {
-            this.props.updateValue("mapZoom", this.props.mapZoom * 1.1)
-        }
-    }
-
     render ({ classes } = this.props){
         let dataCenterDetails = []
 
-        //this is in state
         let nodeList = this.props.nodeList
             .sort(function(a, b){
                 return a.dc.localeCompare(b.dc)
             })
 
-
-        //is the oldNodeList started yet?
-        //if so, define it's mode to 'starting'
-
         let dcs = Array.from(new Set (nodeList.map((node) => node.dc)))
-        //let coords = [[40.7128, 74.0060], [37.7749,122.4194], [35.672855, 139.817413]]
         let coords = [[-74.0060, 40.7128], [-122.4194,37.7749], [-0.1278,51.5074], [ 139.817413,35.672855,]]
-
 
         nodeList.map((node, id) => {
             // Set data for bubble chart
