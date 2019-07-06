@@ -1,6 +1,7 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import { withStyles } from '@material-ui/core/styles';
+import MoonLoader from 'react-spinners/MoonLoader'
 import Grid from '@material-ui/core/Grid';
 import Card from '@material-ui/core/Card';
 import CardActionArea from '@material-ui/core/CardActionArea';
@@ -133,23 +134,24 @@ class Dashboard extends React.Component {
                       style={{marginTop: '10px', marginBottom: '10px'}}
                     />
                     <Divider variant='middle' />
-                    <CardContent>
-                      <div style={{display: 'flex', justifyContent: 'space-around', marginTop: '30px'}}>
-                        <Typography variant='h6' component='div' style={{color: '#ca5f14'}}>
-                          STATUS
-                        </Typography>
-                        <Typography variant='h6' component='div' style={{color: '#ca5f14'}}>
-                          ACTIVITY
-                        </Typography>
-                      </div>
-                      <div style={{display: 'flex', justifyContent: 'space-around', textAlign: 'center'}}>
-                        <div style={{maxHeight: '100px', maxWidth: '200px', padding: '40px', fontSize: '90px'}}>
-                          UN
+                    <CardContent className={classes.clusterCardBody}>
+                        <div style={{display: 'flex', justifyContent: 'center'}}>
+                          <Typography variant='h6' component='div' style={{color: '#ca5f14', margin: '10px 110px 0 0'}}>
+                            NODE STATUS
+                          </Typography>
+                          <Typography variant='h6' component='div' style={{color: '#ca5f14', margin: '10px 30px 0 0'}}>
+                            ACTIVE
+                          </Typography>
                         </div>
-                        <div style={{maxHeight: '100px', maxWidth: '200px', padding: '90px'}}>
-                          meter here
+                        <div style={{display: 'flex', justifyContent: 'center', textAlign: 'center'}}>
+                          <div style={{maxHeight: '200px', maxWidth: '200px', margin: '10px 110px 0 0', fontSize: '90px'}}>
+                            D
+                          </div>
+                          <div style={{maxHeight: '200px', maxWidth: '200px', margin: '40px 30px 0 60px'}}>
+                            ____ ____ ____
+                            {/* <MoonLoader color={'red'}/> */}
+                          </div>
                         </div>
-                      </div>
                     </CardContent>
                   </CardActionArea>
                   <CardActions>
@@ -172,20 +174,20 @@ class Dashboard extends React.Component {
                     />
                     <Divider variant='middle' />
                     <CardContent className={classes.clusterCardBody}>
-                      <div style={{display: 'flex', justifyContent: 'space-around', marginTop: '30px'}}>
-                          <Typography variant='h6' component='div' style={{color: '#ca5f14'}}>
-                            STATUS
+                        <div style={{display: 'flex', justifyContent: 'center'}}>
+                          <Typography variant='h6' component='div' style={{color: '#ca5f14', margin: '10px 110px 0 0'}}>
+                            NODE STATUS
                           </Typography>
-                          <Typography variant='h6' component='div' style={{color: '#ca5f14'}}>
-                            ACTIVITY
+                          <Typography variant='h6' component='div' style={{color: '#ca5f14', margin: '10px 30px 0 0'}}>
+                            ACTIVE
                           </Typography>
                         </div>
-                        <div style={{display: 'flex', justifyContent: 'space-around', textAlign: 'center'}}>
-                          <div style={{maxHeight: '200px', maxWidth: '200px', padding: '40px', fontSize: '90px'}}>
+                        <div style={{display: 'flex', justifyContent: 'center', textAlign: 'center'}}>
+                          <div style={{maxHeight: '200px', maxWidth: '200px', margin: '10px 100px 0 0', fontSize: '90px'}}>
                             UN
                           </div>
-                          <div style={{maxHeight: '200px', maxWidth: '200px', padding: '90px'}}>
-                            meter here
+                          <div style={{maxHeight: '200px', maxWidth: '200px', margin: '40px 30px 0 30px'}}>
+                            <MoonLoader color={'green'}/>
                           </div>
                         </div>
                     </CardContent>

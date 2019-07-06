@@ -23,6 +23,7 @@
     "react-router": "^3.0.5",
     "react-router-redux": "^4.0.8",
     "react-simple-maps": "^0.12.1",
+    "react-spinners": "^0.5.4",
     "react-virtualized": "^9.18.5",
     "redux": "^4.0.1",
     "redux-actions": "^2.2.1",
