@@ -149,7 +149,7 @@ class Dashboard extends React.Component {
                           </div>
                           <div style={{maxHeight: '200px', maxWidth: '200px', margin: '40px 30px 0 60px'}}>
                             ____ ____ ____
-                            {/* <MoonLoader color={'red'}/> */}
+                            {/* <MoonLoader color={'#006600'}/> */}
                           </div>
                         </div>
                     </CardContent>
@@ -187,14 +187,14 @@ class Dashboard extends React.Component {
                             UN
                           </div>
                           <div style={{maxHeight: '200px', maxWidth: '200px', margin: '40px 30px 0 30px'}}>
-                            <MoonLoader color={'green'} />
+                            <MoonLoader color={'#006600'} />
                           </div>
                         </div>
                     </CardContent>
                   </CardActionArea>
                   <CardActions>
-                      <Button size="small" color="primary" variant='outlined'>
-                        Select Cluster
+                      <Button size="small" color="primary" variant='contained'>
+                        Selected
                       </Button>
                   </CardActions>
                 </Card>
