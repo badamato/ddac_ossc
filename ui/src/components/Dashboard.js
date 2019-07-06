@@ -137,7 +137,7 @@ class Dashboard extends React.Component {
                     <CardContent className={classes.clusterCardBody}>
                         <div style={{display: 'flex', justifyContent: 'center'}}>
                           <Typography variant='h6' component='div' style={{color: '#ca5f14', margin: '10px 110px 0 0'}}>
-                            NODE STATUS
+                            NODE STATUS CODES
                           </Typography>
                           <Typography variant='h6' component='div' style={{color: '#ca5f14', margin: '10px 30px 0 0'}}>
                             ACTIVE
@@ -176,7 +176,7 @@ class Dashboard extends React.Component {
                     <CardContent className={classes.clusterCardBody}>
                         <div style={{display: 'flex', justifyContent: 'center'}}>
                           <Typography variant='h6' component='div' style={{color: '#ca5f14', margin: '10px 110px 0 0'}}>
-                            NODE STATUS
+                            NODE STATUS CODES
                           </Typography>
                           <Typography variant='h6' component='div' style={{color: '#ca5f14', margin: '10px 30px 0 0'}}>
                             ACTIVE

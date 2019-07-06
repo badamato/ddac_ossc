@@ -322,18 +322,16 @@ def read():
 @app.route('/demo/nodefull', methods=['GET'])
 
 def nodefull():
-  print(keyfile)
   n = [(ddaccontactpoints[0]), (osscontactpoints[0])]
   k = paramiko.RSAKey.from_private_key_file(keyfile)
   c = paramiko.SSHClient()
-  s = stdout
 
   for points in n:
     c.set_missing_host_key_policy(paramiko.AutoAddPolicy())
     c.connect( hostname = n, username = username, pkey = k )
     stdin, stdout, stderr = c.exec_command("nodetool status")
 
-  return s
+  return stdout
 
 
 if __name__ == '__main__':
