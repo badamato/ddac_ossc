@@ -187,6 +187,7 @@ class Dashboard extends React.Component {
                             UN
                           </div>
                           <div style={{maxHeight: '200px', maxWidth: '200px', margin: '40px 30px 0 30px'}}>
+                            {/* ____ ____ ____ */}
                             <MoonLoader color={'#006600'} />
                           </div>
                         </div>
