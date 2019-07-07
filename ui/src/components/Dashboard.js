@@ -136,20 +136,20 @@ class Dashboard extends React.Component {
                     <Divider variant='middle' />
                     <CardContent className={classes.clusterCardBody}>
                         <div style={{display: 'flex', justifyContent: 'center'}}>
-                          <Typography variant='h6' component='div' style={{color: '#ca5f14', margin: '10px 110px 0 0'}}>
+                          <Typography variant='h6' component='div' style={{color: '#ca5f14', margin: '10px 60px 0 20px'}}>
                             NODE STATUS CODES
                           </Typography>
-                          <Typography variant='h6' component='div' style={{color: '#ca5f14', margin: '10px 30px 0 0'}}>
+                          <Typography variant='h6' component='div' style={{color: '#ca5f14', margin: '10px 50px 0 0'}}>
                             ACTIVE
                           </Typography>
                         </div>
                         <div style={{display: 'flex', justifyContent: 'center', textAlign: 'center'}}>
-                          <div style={{maxHeight: '200px', maxWidth: '200px', margin: '10px 110px 0 0', fontSize: '90px'}}>
-                            D
+                          <div style={{maxHeight: '200px', maxWidth: '200px', margin: '10px 40px 0 40px', fontSize: '90px'}}>
+                            DL
                           </div>
-                          <div style={{maxHeight: '200px', maxWidth: '200px', margin: '40px 30px 0 60px'}}>
+                          <div style={{maxHeight: '200px', maxWidth: '200px', margin: '30px 30px 0 60px'}}>
                             ____ ____ ____
-                            {/* <MoonLoader color={'#006600'}/> */}
+                            {/* <MoonLoader color={'#006600'} /> */}
                           </div>
                         </div>
                     </CardContent>
@@ -158,7 +158,6 @@ class Dashboard extends React.Component {
                     <Button size="small" color="primary" variant='outlined'>
                       Select Cluster
                     </Button>
-
                   </CardActions>
                 </Card>
               </Grid>
@@ -175,18 +174,18 @@ class Dashboard extends React.Component {
                     <Divider variant='middle' />
                     <CardContent className={classes.clusterCardBody}>
                         <div style={{display: 'flex', justifyContent: 'center'}}>
-                          <Typography variant='h6' component='div' style={{color: '#ca5f14', margin: '10px 110px 0 0'}}>
+                          <Typography variant='h6' component='div' style={{color: '#ca5f14', margin: '10px 60px 0 20px'}}>
                             NODE STATUS CODES
                           </Typography>
-                          <Typography variant='h6' component='div' style={{color: '#ca5f14', margin: '10px 30px 0 0'}}>
+                          <Typography variant='h6' component='div' style={{color: '#ca5f14', margin: '10px 50px 0 0'}}>
                             ACTIVE
                           </Typography>
                         </div>
                         <div style={{display: 'flex', justifyContent: 'center', textAlign: 'center'}}>
-                          <div style={{maxHeight: '200px', maxWidth: '200px', margin: '10px 100px 0 0', fontSize: '90px'}}>
+                          <div style={{maxHeight: '200px', maxWidth: '200px', margin: '10px 40px 0 40px', fontSize: '90px'}}>
                             UN
                           </div>
-                          <div style={{maxHeight: '200px', maxWidth: '200px', margin: '40px 30px 0 30px'}}>
+                          <div style={{maxHeight: '200px', maxWidth: '200px', margin: '30px 30px 0 60px'}}>
                             {/* ____ ____ ____ */}
                             <MoonLoader color={'#006600'} />
                           </div>
@@ -194,8 +193,8 @@ class Dashboard extends React.Component {
                     </CardContent>
                   </CardActionArea>
                   <CardActions>
-                      <Button size="small" color="primary" variant='contained'>
-                        Selected
+                      <Button size="small" color="primary" variant='outlined'>
+                        Select Cluster
                       </Button>
                   </CardActions>
                 </Card>

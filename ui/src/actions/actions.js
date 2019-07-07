@@ -30,7 +30,7 @@ export function writeApi() {
 }
 
 export function readApi() {
-    var data = '{"dc": "AWS", "count": 200000, "cl": "ONE"}';
+  var data = '{"targetCluster": "dc0"}';
 
     return(dispatch, getState) => {
         dispatch(appendValue('events', 'Initiating reads for purchase transactions'))

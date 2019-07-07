@@ -326,12 +326,16 @@ def nodefull():
   k = paramiko.RSAKey.from_private_key_file(keyfile)
   c = paramiko.SSHClient()
 
-  for points in n:
+  for i in n:
     c.set_missing_host_key_policy(paramiko.AutoAddPolicy())
     c.connect( hostname = n, username = username, pkey = k )
     stdin, stdout, stderr = c.exec_command("nodetool status")
+    return stdout
 
-  return stdout
+  stdout = stdoutAll
+  print(stdoutAll)
+  return stdoutAll
+  
 
 
 if __name__ == '__main__':
