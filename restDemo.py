@@ -323,27 +323,30 @@ def read():
 @app.route('/demo/nodefull', methods=['GET'])
 
 def nodefull():
-  nodes = [(ddaccontactpoints[0]), (osscontactpoints[0])]
+  hostMap = {'168.61.172.103':'10.0.0.5','23.99.133.211':'10.0.0.6','168.61.183.79':'10.0.0.7'}
+
+  nodes = [ddaccontactpoints[0], ddaccontactpoints[1], osscontactpoints[0]]
   k = paramiko.RSAKey.from_private_key_file(keyfile)
   c = paramiko.SSHClient()
   result = []
 
-  def statusOfNode(output, target):
+  def statusOfNode(output, targetAddress):
     regex = r"^(?P<state>[UD][NLJ])\s+(?P<address>\S+)\s+(?P<load>\S+\s+\S+)\s+(?P<tokens>\d+)\s+(?P<owns>\S+)\s+(?P<hostid>\S+)\s+(?P<rack>\S+)$"
     matches = re.finditer(regex, output, re.MULTILINE)
     nodeState = []
     
     for matchNum, match in enumerate(matches, start=1):
-        # print(match.groupdict())
         address = match.group("address")
-        # print(address)
-        # print(target)
-        nodeState.append({
-          address: match.group("state")
-        })
+        if match.group("address") == hostMap[targetAddress]:
+          nodeState.append({
+            address: match.group("state")
+          })
+        else:
+          print("Connecting to target address: " + hostMap[targetAddress])
     return nodeState
 
   for node in nodes:
+    print("Connecting to SSH node: " + node)
     c.set_missing_host_key_policy(paramiko.AutoAddPolicy())
     c.connect( port = 22, hostname = node, username = username, pkey = k )
     stdin, stdout, stderr = c.exec_command("nodetool status")
@@ -351,9 +354,10 @@ def nodefull():
     lines = "".join(output)
     status = statusOfNode(lines, node)
     result = result + status
-  print(result)
 
-  return ",".join(map(str, result))
+  finalResult = ",".join(map(str, result))
+  print("Here is my finalResult: " + finalResult)
+  return finalResult
 
 
 if __name__ == '__main__':
