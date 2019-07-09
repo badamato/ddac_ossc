@@ -1,6 +1,6 @@
 #!/usr/bin/python
 
-import time, uuid, requests, urllib2, paramiko, json
+import time, uuid, requests, urllib2, paramiko, json, re
 from random import randint
 
 from flask import Flask, jsonify, abort, request, make_response, url_for, Response
@@ -54,7 +54,7 @@ profile2 = ExecutionProfile( load_balancing_policy=DCAwareRoundRobinPolicy(local
                             consistency_level = ConsistencyLevel.ONE
 )
 
-print "Connecting to cluster"
+print ("Connecting to cluster")
 
 ddacCluster = Cluster( contact_points=ddaccontactpoints,
                       auth_provider=auth_provider,
@@ -72,7 +72,7 @@ ossCluster = Cluster( contact_points=osscontactpoints,
 ddacSession = ddacCluster.connect()
 ossSession = ossCluster.connect()
 
-print "Connected to cluster"
+print ("Connected to cluster")
 
 ddacSession.execute (ks_query)
 ddacSession.execute (""" CREATE TABLE IF NOT EXISTS  demo.table2 (     bucket text,     ts timeuuid,     d text,     data1 text,     data2 text,     data3 text,     PRIMARY KEY (bucket, ts)) WITH CLUSTERING ORDER BY (ts desc) """)
@@ -93,6 +93,7 @@ def index():
 
 #>>>>>>>>>>>>>>>>>>>>>>>WRITE
 @app.route('/demo/write', methods=['POST'])
+
 def writev0():
   if not request.json or not 'count' in request.json or not 'dc' in request.json or not 'cl' in request.json or not 'targetCluster' in request.json:
     abort(400)
@@ -125,7 +126,7 @@ def writev0():
                                   consistency_level = CL
       )
 
-      print "Connecting to cluster"
+      print ("Connecting to cluster")
 
       if (targetCluster == "DDAC"):
         contactpoints = ddaccontactpoints
@@ -238,7 +239,7 @@ def read():
                                   consistency_level = CL
       )
 
-      print "Connecting to cluster"
+      print ("Connecting to cluster")
 
       if (targetCluster == "DDAC"):
         contactpoints = ddaccontactpoints
@@ -322,20 +323,34 @@ def read():
 @app.route('/demo/nodefull', methods=['GET'])
 
 def nodefull():
-  n = [(ddaccontactpoints[0]), (osscontactpoints[0])]
+  nodes = [(ddaccontactpoints[0]), (osscontactpoints[0])]
   k = paramiko.RSAKey.from_private_key_file(keyfile)
   c = paramiko.SSHClient()
+  result = []
 
-  for i in n:
+  def statusOfNode(output, target):
+    regex = r"^(?P<state>[UD][NLJ])\s+(?P<address>\S+)\s+(?P<load>\S+\s+\S+)\s+(?P<tokens>\d+)\s+(?P<owns>\S+)\s+(?P<hostid>\S+)\s+(?P<rack>\S+)$"
+    matches = re.finditer(regex, output, re.MULTILINE)
+
+    for matchNum, match in enumerate(matches, start=1):
+        # print(match.groupdict())
+        address = match.group("address")
+        # print(address)
+        if address == target:
+          return match.group("state")
+    return "nothing"
+
+  for node in nodes:
     c.set_missing_host_key_policy(paramiko.AutoAddPolicy())
-    c.connect( hostname = n, username = username, pkey = k )
+    c.connect( port = 22, hostname = node, username = username, pkey = k )
     stdin, stdout, stderr = c.exec_command("nodetool status")
-    return stdout
+    output = stdout.readlines()
+    lines = "".join(output)
+    status = statusOfNode(lines, node)
+    print(status)
+    result.append(status)
 
-  stdout = stdoutAll
-  print(stdoutAll)
-  return stdoutAll
-  
+  return ",".join(result)
 
 
 if __name__ == '__main__':

@@ -8,7 +8,7 @@ import { streamingRequest } from '../common/requests.js';
 const hostname = window.location.hostname;
 
 export function writeApi() {
-    var data = '{"targetCluster": "dc0"}';
+    var data = '{"targetCluster": "DDAC"}';
 
     return(dispatch, getState) => {
         dispatch(appendValue('events', 'Initiating writes for purchase transactions'))
@@ -30,7 +30,7 @@ export function writeApi() {
 }
 
 export function readApi() {
-  var data = '{"targetCluster": "dc0"}';
+  var data = '{"targetCluster": "OSSC"}';
 
     return(dispatch, getState) => {
         dispatch(appendValue('events', 'Initiating reads for purchase transactions'))
@@ -49,6 +49,48 @@ export function readApi() {
         })
     }
 }
+
+export function getNodeInfo() {
+    return(dispatch, getState) => {
+        const url = 'http://'+hostname+':5000/demo/nodefull';
+        const interval = setInterval(() => {
+            get({
+                url: url, 
+                success: function(res){
+                    let oldNodeList = []
+                    Object.assign(oldNodeList, getState().app.nodeList)
+                    oldNodeList = oldNodeList.map((node, id) => {
+                          let olderNodeList = getState().app.oldNodeList
+                          if (node.last_seen > 0) {
+                            if (olderNodeList === undefined || olderNodeList[id] === undefined) {
+                                return node
+                            }
+                            if (olderNodeList[id].mode === 'starting') {
+                                node.mode = 'starting';
+                                node.last_seen = -1;
+                            }
+                          } if(node.last_seen === 0){
+                            if (olderNodeList === undefined || olderNodeList[id] === undefined) {
+                                return node
+                            }
+                            if (olderNodeList[id].mode === 'stopping') {
+                                node.mode = 'stopping';
+                                node.last_seen = -2;
+                            }
+                          }
+  return node
+                    })
+
+                    dispatch(updateValue('oldNodeList', oldNodeList))
+                    dispatch(updateValue('nodeList', res.data))
+
+                },
+                dispatch: dispatch,
+            });
+        }, 5000)
+    }
+}
+
 
 // export function getDataCenter(url) {
 //     return(dispatch, getState) => {
@@ -95,46 +137,6 @@ export function readApi() {
 //     });
 // }
 
-export function getNodeInfo() {
-    return(dispatch, getState) => {
-        const url = 'http://'+hostname+':5000/demo/nodefull';
-        const interval = setInterval(() => {
-            get({
-                url: url, 
-                success: function(res){
-                    let oldNodeList = []
-                    Object.assign(oldNodeList, getState().app.nodeList)
-                    oldNodeList = oldNodeList.map((node, id) => {
-                          let olderNodeList = getState().app.oldNodeList
-                          if (node.last_seen > 0) {
-                            if (olderNodeList === undefined || olderNodeList[id] === undefined) {
-                                return node
-                            }
-                            if (olderNodeList[id].mode === 'starting') {
-                                node.mode = 'starting';
-                                node.last_seen = -1;
-                            }
-                          } if(node.last_seen === 0){
-                            if (olderNodeList === undefined || olderNodeList[id] === undefined) {
-                                return node
-                            }
-                            if (olderNodeList[id].mode === 'stopping') {
-                                node.mode = 'stopping';
-                                node.last_seen = -2;
-                            }
-                          }
-  return node
-                    })
-
-                    dispatch(updateValue('oldNodeList', oldNodeList))
-                    dispatch(updateValue('nodeList', res.data))
-
-                },
-                dispatch: dispatch,
-            });
-        }, 5000)
-    }
-}
 
 export function updateValue(key, value){
     return(dispatch, getState) => {

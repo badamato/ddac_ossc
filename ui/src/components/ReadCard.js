@@ -19,18 +19,15 @@ class ReadCard extends React.Component {
                             {
                                 [...this.props.reads].reverse().map((read, index) => {
                                     let imageUrl= "";
-                                    if (read.dc === "AWS"){
-                                        imageUrl = require('../images/aws.png')
+                                    if (read.targetCluster === "DDAC"){
+                                        imageUrl = require('../images/ddac.png')
                                     }
-                                    if (read.dc === "Azure"){
-                                        imageUrl = require('../images/azure.png')
-                                    }
-                                    if (read.dc === "GCP"){
-                                        imageUrl = require('../images/gcp.png')
+                                    if (read.targetCluster === "OSSC"){
+                                        imageUrl = require('../images/cassandra.png')
                                     }
                                     return (
                                         <div key={index}>
-                                            <img src={imageUrl} alt={read.dc}  height="36" width="58" style={{ "padding-right": "2em"}} />
+                                            <img src={imageUrl} alt={read.targetCluster}  height="36" width="58" style={{ "padding-right": "2em"}} />
                                             Count: {read.count}, Result: {read.result}
                                         </div>
                                     )
