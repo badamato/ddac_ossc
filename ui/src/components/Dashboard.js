@@ -149,7 +149,7 @@ class Dashboard extends React.Component {
                           </div>
                           <div style={{maxHeight: '200px', maxWidth: '200px', margin: '30px 30px 0 60px'}}>
                             ____ ____ ____
-                            {/* <MoonLoader color={'#006600'} /> */}
+                            {/* <MoonLoader color={'#ca5f14'} /> */}
                           </div>
                         </div>
                     </CardContent>
