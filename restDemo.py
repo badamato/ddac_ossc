@@ -331,14 +331,17 @@ def nodefull():
   def statusOfNode(output, target):
     regex = r"^(?P<state>[UD][NLJ])\s+(?P<address>\S+)\s+(?P<load>\S+\s+\S+)\s+(?P<tokens>\d+)\s+(?P<owns>\S+)\s+(?P<hostid>\S+)\s+(?P<rack>\S+)$"
     matches = re.finditer(regex, output, re.MULTILINE)
-
+    nodeState = []
+    
     for matchNum, match in enumerate(matches, start=1):
         # print(match.groupdict())
         address = match.group("address")
         # print(address)
-        if address == target:
-          return match.group("state")
-    return "nothing"
+        # print(target)
+        nodeState.append({
+          address: match.group("state")
+        })
+    return nodeState
 
   for node in nodes:
     c.set_missing_host_key_policy(paramiko.AutoAddPolicy())
@@ -347,10 +350,10 @@ def nodefull():
     output = stdout.readlines()
     lines = "".join(output)
     status = statusOfNode(lines, node)
-    print(status)
-    result.append(status)
+    result = result + status
+  print(result)
 
-  return ",".join(result)
+  return ",".join(map(str, result))
 
 
 if __name__ == '__main__':
