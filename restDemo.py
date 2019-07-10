@@ -25,7 +25,7 @@ config.read('demo.ini')
 
 ddaccontactpoints = config.get('CONFIG','ddaccontactpoints').split(',')
 osscontactpoints = config.get('CONFIG','osscontactpoints').split(',')
-localDC = config.get('KHAOS','localDC')
+# localDC = config.get('KHAOS','localDC')
 username = config.get('KHAOS','sshusername')
 keyfile = config.get('KHAOS','sshkeyfile')
 rowcount = config.getint('CONFIG','rowcount')

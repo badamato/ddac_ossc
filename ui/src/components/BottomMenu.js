@@ -124,11 +124,13 @@ class BottomMenu extends React.Component{
                         >
                         <Paper square className={classes.paper}>
                             <div className={classes.controlContainer}>
-                                <Button variant="contained" color="secondary" className={classes.button} size="large" onClick={() => {this.props.getWrites()}}>LAUNCH OFFERS</Button>
+                                <Button variant="contained" color="secondary" className={classes.button} size="large" onClick={() => {this.props.getReads('dc0', 'DDAC')}}>READ DDAC</Button>
+                                <Button variant="contained" color="secondary" className={classes.button} size="large" onClick={() => {this.props.getWrites('dc0', 'DDAC')}}>WRITE DDAC</Button>
 
-                                <Button variant="contained" color="secondary" className={classes.button} size="large" onClick={() => {this.props.getReads()}}>LAUNCH APP</Button>
+                                <Button variant="contained" color="secondary" className={classes.button} size="large" onClick={() => {this.props.getReads('dc1', 'OSSC')}}>READ OSSC</Button>
+                                <Button variant="contained" color="secondary" className={classes.button} size="large" onClick={() => {this.props.getWrites('dc1', 'OSSC')}}>WRITE OSSC</Button>
 
-                                <Button variant="contained" color="secondary" className={classes.button} size="large" onClick={() => {this.props.dropOneNode()}}>TOGGLE CLUSTERS</Button>
+                                {/* <Button variant="contained" color="secondary" className={classes.button} size="large" onClick={() => {this.props.dropOneNode()}}>TOGGLE CLUSTERS</Button> */}
                             </div>
                         </Paper>
                     </Drawer>
@@ -157,11 +159,11 @@ const mapDispatchToProps = (dispatch, ownProps) => {
         init: () => {
 
         },
-        getWrites: () => {
-            dispatch(writeApi('http://'+window.location.hostname+':8080/demo/write'))
+        getWrites: (dc, cluster) => {
+            dispatch(writeApi(dc, cluster))
         },
-        getReads: () => {
-            dispatch(readApi('http://'+window.location.hostname+ ':8080/demo/read'))
+        getReads: (dc, cluster) => {
+            dispatch(readApi(dc, cluster))
         },
         dropOneNode: () => {
             dispatch(dropOneNode())

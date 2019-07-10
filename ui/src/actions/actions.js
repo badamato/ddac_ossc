@@ -7,11 +7,11 @@ import { streamingRequest } from '../common/requests.js';
 //const hostname = '3.17.77.103';
 const hostname = window.location.hostname;
 
-export function writeApi() {
-    var data = '{"targetCluster": "DDAC"}';
+export function writeApi(dc, cluster) {
+    var data = '{"dc":"' + dc + '", "count": 200000, "cl": "ONE", "targetCluster":"' + cluster +'"}';
 
     return(dispatch, getState) => {
-        dispatch(appendValue('events', 'Initiating writes for purchase transactions'))
+        // dispatch(appendValue('events', 'Initiating writes for purchase transactions'))
 
         const url = 'http://'+hostname+':5000/demo/write';
         streamingRequest({
@@ -29,11 +29,11 @@ export function writeApi() {
 
 }
 
-export function readApi() {
-  var data = '{"targetCluster": "OSSC"}';
+export function readApi(dc, cluster) {
+  var data = '{"dc":"' + dc + '", "count": 200000, "cl": "ONE", "targetCluster":"' + cluster +'"}';
 
     return(dispatch, getState) => {
-        dispatch(appendValue('events', 'Initiating reads for purchase transactions'))
+        // dispatch(appendValue('events', 'Initiating reads for purchase transactions'))
 
         const url = 'http://'+hostname+':5000/demo/read';
         streamingRequest({
