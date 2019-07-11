@@ -42,7 +42,7 @@ class MainPage extends Component {
         
         return (
             <div className={"gridroot"} >
-                <Grid container justify='center' >
+                <Grid container justify='center' style={{marginTop: '70px'}}>
                     <Grid item xs={12} sm={8}>
                         <Paper className={"papercard"}>
                             <ReadCard />
