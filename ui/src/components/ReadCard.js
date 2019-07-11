@@ -13,8 +13,8 @@ class ReadCard extends React.Component {
         return (
             <div className={"root"}>
                 <Card className={"classes"}>
-                    <CardHeader className={"cardheader"}>READS FROM CLUSTER</CardHeader>
-                    <CardBody className={"cardbody"}>
+                    <CardHeader className={"cardheader"}>Cluster Activity</CardHeader>
+                    <CardBody className={"cardbody"} style={{border: '2px solid blue'}}>
                         <div className={"cardtext"}>
                             {
                                 [...this.props.reads].reverse().map((read, index) => {

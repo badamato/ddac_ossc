@@ -1,11 +1,7 @@
-import {createAction} from 'redux-actions';
-import requestActions from './requestActions.js';
-import { get } from '../common/requests.js';
-import { post } from '../common/requests.js';
 import { streamingRequest } from '../common/requests.js';
 
-//const hostname = '3.17.77.103';
 const hostname = window.location.hostname;
+
 
 export function writeApi(dc, cluster) {
     var data = '{"dc":"' + dc + '", "count": 200000, "cl": "ONE", "targetCluster":"' + cluster +'"}';

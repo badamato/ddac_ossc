@@ -17,6 +17,7 @@ const styles = theme => ({
       backgroundColor: 'white',
   },
   controlContainer: {
+      display: 'flex',
       width: '100%',
       justifyContent: 'center',
   },
