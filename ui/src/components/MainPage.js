@@ -102,7 +102,7 @@ class MainPage extends Component {
                                   color="secondary" 
                                   className={classes.button} 
                                   size="large" 
-                                  onClick={() => {this.handleWriteClick('dc0', 'DDAC')}}
+                                  onClick={() => {this.handleWritesClick('dc0', 'DDAC')}}
                                 >
                                   WRITE DDAC
                                 </Button> :
@@ -112,14 +112,12 @@ class MainPage extends Component {
                                   color="primary" 
                                   className={classes.button} 
                                   size="large" 
-                                  onClick={() => {this.handleWriteClick('dc1', 'OSSC')}}
+                                  onClick={() => {this.handleWritesClick('dc1', 'OSSC')}}
                                 >
                                   WRITE OSSC
                                 </Button>
                               }
                             </div>
-
-
                         </Paper>
                     </Grid>
                 </Grid>
