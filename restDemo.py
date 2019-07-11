@@ -196,11 +196,10 @@ def writev0():
           yield json.dumps(r) + "\r\n"
           cluster.shutdown() 
 
-        time.sleep(.03)  # an artificial delay
-        x = x + 1
-        y = y + 1
+      time.sleep(.03)  # an artificial delay
+      x = x + 1
+      y = y + 1
     cluster.shutdown()
-    print("Here is writeStream")
   return Response(writeStream(targetCluster), content_type='application/stream+json')
 
 
@@ -284,7 +283,6 @@ def read():
 
       for row in results:
         r["d"] = row.d
-
       if(y == rowcount):
         y = 0
         try:
@@ -300,7 +298,6 @@ def read():
               used_dc = h.datacenter
           r["count"] = x
           r["dc"] = used_dc
-          print(json.dumps(r))
           yield json.dumps(r) + "\r\n"
         except Exception as e:
           for i in e:
@@ -313,9 +310,9 @@ def read():
           yield json.dumps(r) + "\r\n"
           cluster.shutdown()
 
-        time.sleep(.03)  # an artificial delay
-        x = x + 1
-        y = y + 1
+      time.sleep(.03)  # an artificial delay
+      x = x + 1
+      y = y + 1
     cluster.shutdown()
   print("Here is readStream")
   return Response(readStream(targetCluster), content_type='application/stream+json')

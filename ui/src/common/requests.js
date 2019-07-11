@@ -34,7 +34,7 @@ export function post({url, params, success, error, dispatch} = {}) {
     var request = axios.post(url, params, {
         headers: {
             "content-type": "application/json",
-            "cache-control": "no-cache"
+            "cache-control": "no-cache",
         }
     })
     .then(success || function(response){

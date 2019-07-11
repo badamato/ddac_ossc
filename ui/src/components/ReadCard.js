@@ -15,7 +15,7 @@ class ReadCard extends React.Component {
             <div className={"root"}>
                 <Card className={"classes"}>
                   <Typography variant='h5' className={"cardTitle"} style={{fontFamily: 'Raleway'}}>Cluster Activity</Typography>
-                  <Divider variant='middle' className={"cardDivider"} style={{width: '92%', margin: '20px auto'}}/>
+                  <Divider variant='middle' className={"cardDivider"} style={{width: '92%', margin: '20px auto 0'}}/>
                   <CardBody className={"cardbody"}>
                       <div className={"cardtext"}>
                           {
@@ -29,7 +29,7 @@ class ReadCard extends React.Component {
                                   }
                                   return (
                                       <div key={index}>
-                                          <img src={imageUrl} alt={read.targetCluster}  height="36" width="58" style={{ "padding-right": "2em"}} />
+                                          <img src={imageUrl} alt={read.targetCluster}  height="36" width="58" style={{ paddingRight: "2em"}} />
                                           Count: {read.count}, Result: {read.result}
                                       </div>
                                   )
