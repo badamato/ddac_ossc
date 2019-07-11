@@ -55,8 +55,8 @@ class MainPage extends Component {
                                 <Button variant="contained" color="secondary" className={classes.button} size="large" onClick={() => {this.props.getWrites('dc0', 'DDAC')}}>WRITE DDAC</Button>
                             </div>
                             <div className={classes.controlContainer}>
-                                <Button variant="contained" color="default" className={classes.button} size="large" onClick={() => {this.props.getReads('dc1', 'OSSC')}}>READ OSSC</Button>
-                                <Button variant="contained" color="default" className={classes.button} size="large" onClick={() => {this.props.getWrites('dc1', 'OSSC')}}>WRITE OSSC</Button>
+                                <Button variant="contained" color="primary" className={classes.button} size="large" onClick={() => {this.props.getReads('dc1', 'OSSC')}}>READ OSSC</Button>
+                                <Button variant="contained" color="primary" className={classes.button} size="large" onClick={() => {this.props.getWrites('dc1', 'OSSC')}}>WRITE OSSC</Button>
                             </div>
                         </Paper>
                     </Grid>

@@ -46,21 +46,10 @@ html #root {
     height: 100vh;
 }
 
-/* .cardheader {
-    background-color: #d8d8d8;
-    font-size: 30px;
-    color: black;
-    text-align: center;
-    width: 70%;
-    white-space: nowrap;
-    text-overflow: ellipsis;
-    box-shadow: 4px 8px 6px 0px rgba(0,0,0,0.2), 0px 0px 7px 0px rgba(0,0,0,0.14), 0px 4px 4px -2px rgba(0,0,0,0.12);
-} */
-
 .cardbody {
-    margin: 0 auto;
+    margin: 50px;
+    padding: 4% !important;
     color: black;
-    padding: 5% !important;
     overflow: hidden;
 }
 

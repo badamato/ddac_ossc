@@ -12,7 +12,7 @@ class ReadCard extends React.Component {
         return (
             <div className={"root"}>
                 <Card className={"classes"}>
-                  <CardBody className={"cardbody"} style={{margin: '40px', border: '2px solid lightgrey'}}>
+                  <CardBody className={"cardbody"}>
                       <div className={"cardtext"}>
                           {
                               [...this.props.reads].reverse().map((read, index) => {
