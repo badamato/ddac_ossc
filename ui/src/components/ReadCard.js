@@ -1,5 +1,7 @@
 import React from "react";
 import { connect } from 'react-redux';
+import Divider from '@material-ui/core/Divider'
+import Typography from '@material-ui/core/Typography'
 import Card from 'material-kit-react/components/Card/Card';
 import CardBody from 'material-kit-react/components/Card/CardBody';
 
@@ -12,6 +14,8 @@ class ReadCard extends React.Component {
         return (
             <div className={"root"}>
                 <Card className={"classes"}>
+                  <Typography variant='h5' className={"cardTitle"} style={{fontFamily: 'Raleway'}}>Cluster Activity</Typography>
+                  <Divider variant='middle' className={"cardDivider"} style={{width: '92%', margin: '20px auto'}}/>
                   <CardBody className={"cardbody"}>
                       <div className={"cardtext"}>
                           {
