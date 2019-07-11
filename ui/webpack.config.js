@@ -57,23 +57,6 @@ const CONFIG = {
           { loader: "css-loader" },
         ],
       }
-      // {
-      //   test: /\.svg$/,
-      //   loader: 'svg-inline-loader'
-      // }
-      /*
-      {
-        test: /\.css$/,
-        loader: 'style-loader'
-      }, {
-        test: /\.css$/,
-        loader: 'css-loader',
-        query: {
-          modules: true,
-          // localIdentName: '[name]__[local]___[hash:base64:5]'
-        }
-      }
-      */
     ]
   },
 
@@ -104,30 +87,6 @@ const PROD = {
             loader: 'file-loader',
             options: {},
           },
-          {
-            loader: 'image-webpack-loader',
-            options: {
-              mozjpeg: {
-                progressive: true,
-                quality: 65
-              },
-              // optipng.enabled: false will disable optipng
-              optipng: {
-                enabled: false,
-              },
-              pngquant: {
-                quality: '65-90',
-                speed: 4
-              },
-              gifsicle: {
-                interlaced: false,
-              },
-              // the webp option will enable WEBP
-              webp: {
-                quality: 75
-              }
-            }
-          },
         ],
       },
       {
@@ -149,19 +108,6 @@ const PROD = {
           { loader: "css-loader" },
         ],
       }
-      /*
-      {
-        test: /\.css$/,
-        loader: 'style-loader'
-      }, {
-        test: /\.css$/,
-        loader: 'css-loader',
-        query: {
-          modules: true,
-          //localIdentName: '[name]__[local]___[hash:base64:5]'
-        }
-      }
-      */
     ]
   },
 

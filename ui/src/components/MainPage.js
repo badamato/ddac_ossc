@@ -33,11 +33,32 @@ const styles = theme => ({
 
 class MainPage extends Component {
 
+  state = {
+    toggleReadButton: true,
+    toggleWriteButton: true,
+  }
+
+  handleReadsClick = (dc, cluster) => {
+    this.props.getReads(dc, cluster);
+    this.setState({toggleReadButton: !this.state.toggleReadButton});
+    this.props.resetCard;
+  }
+
+
+  handleWritesClick = (dc, cluster) => {
+    this.props.getWrites(dc, cluster);
+    this.setState({toggleWriteButton: !this.state.toggleWriteButton});
+    this.props.resetCard;
+  }
+
   componentDidMount(){
     this.props.init()
-    }
+  }
 
     render() {
+        console.log(this.state.toggleReadButton)
+        console.log(this.state.toggleWriteButton)
+        
         const { classes } = this.props;
         
         return (
@@ -45,19 +66,60 @@ class MainPage extends Component {
                 <Grid container justify='center' style={{marginTop: '70px'}}>
                     <Grid item xs={12} sm={8}>
                         <Paper className={"papercard"}>
-                            <ReadCard />
+                            <ReadCard reset={this.state.toggleReadButton}/>
                         </Paper>
                     </Grid>
                     <Grid item xs={12} sm={10}>
                         <Paper square className={classes.paper}>
                             <div className={classes.controlContainer}>
-                                <Button variant="contained" color="secondary" className={classes.button} size="large" onClick={() => {this.props.getReads('dc0', 'DDAC')}}>READ DDAC</Button>
-                                <Button variant="contained" color="secondary" className={classes.button} size="large" onClick={() => {this.props.getWrites('dc0', 'DDAC')}}>WRITE DDAC</Button>
+                              {this.state.toggleReadButton ? 
+                                <Button 
+                                  variant="contained" 
+                                  color="secondary" 
+                                  className={classes.button} 
+                                  size="large" 
+                                  onClick={() => {this.handleReadsClick('dc0', 'DDAC')}}
+                                >
+                                  READ DDAC
+                                </Button> :
+
+                                <Button
+                                  variant="contained" 
+                                  color="primary" 
+                                  className={classes.button} 
+                                  size="large" 
+                                  onClick={() => {this.handleReadsClick('dc1', 'OSSC')}}
+                                >
+                                  READ OSSC
+                                </Button>
+                              }
                             </div>
+
                             <div className={classes.controlContainer}>
-                                <Button variant="contained" color="primary" className={classes.button} size="large" onClick={() => {this.props.getReads('dc1', 'OSSC')}}>READ OSSC</Button>
-                                <Button variant="contained" color="primary" className={classes.button} size="large" onClick={() => {this.props.getWrites('dc1', 'OSSC')}}>WRITE OSSC</Button>
+                              {this.state.toggleWriteButton ? 
+                                <Button 
+                                  variant="contained" 
+                                  color="secondary" 
+                                  className={classes.button} 
+                                  size="large" 
+                                  onClick={() => {this.handleWriteClick('dc0', 'DDAC')}}
+                                >
+                                  WRITE DDAC
+                                </Button> :
+
+                                <Button
+                                  variant="contained" 
+                                  color="primary" 
+                                  className={classes.button} 
+                                  size="large" 
+                                  onClick={() => {this.handleWriteClick('dc1', 'OSSC')}}
+                                >
+                                  WRITE OSSC
+                                </Button>
+                              }
                             </div>
+
+
                         </Paper>
                     </Grid>
                 </Grid>

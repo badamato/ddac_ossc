@@ -7,6 +7,14 @@ import CardBody from 'material-kit-react/components/Card/CardBody';
 
 
 class ReadCard extends React.Component {
+  state = {
+    reset: true,
+  }
+
+
+  componentWillReceiveProps(this.props.reset) {
+    this.setState({reset: this.props.reset})
+  }
     componentDidMount() {
         this.props.init();
     }
@@ -20,7 +28,7 @@ class ReadCard extends React.Component {
                       <div className={"cardtext"}>
                           {
                               [...this.props.reads].reverse().map((read, index) => {
-                                  let imageUrl= "";
+                                  let imageUrl="";
                                   if (read.targetCluster === "DDAC"){
                                       imageUrl = require('../images/ddac.png')
                                   }
