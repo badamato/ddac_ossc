@@ -91,7 +91,7 @@ class MainPage extends Component {
                                 </Button>
                               }
                             </div>
-
+{/* 
                             <div className={classes.controlContainer}>
                               {this.state.toggleWriteButton ? 
                                 <Button 
@@ -113,7 +113,7 @@ class MainPage extends Component {
                                   WRITE OSSC
                                 </Button>
                               }
-                            </div>
+                            </div> */}
                         </Paper>
                     </Grid>
                 </Grid>
