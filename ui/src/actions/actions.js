@@ -4,7 +4,7 @@ const hostname = window.location.hostname;
 
 
 export function writeApi(dc, cluster) {
-    var data = '{"dc":"' + dc + '", "count": 200000, "cl": "ONE", "targetCluster":"' + cluster +'"}';
+    var data = '{"dc":"' + dc + '", "count": 10, "cl": "ONE", "targetCluster":"' + cluster +'"}';
 
     return(dispatch, getState) => {
 
@@ -25,7 +25,7 @@ export function writeApi(dc, cluster) {
 }
 
 export function readApi(dc, cluster) {
-  var data = '{"dc":"' + dc + '", "count": 200000, "cl": "ONE", "targetCluster":"' + cluster +'"}';
+  var data = '{"dc":"' + dc + '", "count": 100, "cl": "ONE", "targetCluster":"' + cluster +'"}';
 
     return(dispatch, getState) => {
 
