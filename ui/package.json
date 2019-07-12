@@ -1,7 +1,7 @@
 {
-  "name": "dse-uptime-demo-ui",
+  "name": "ddac-ossc",
   "version": "1.0.0",
-  "description": "DSE Uptime Demo UI - Chaos Katz",
+  "description": "DDAC & OSS Cassandra",
   "main": "src/app.js",
   "author": "",
   "scripts": {
