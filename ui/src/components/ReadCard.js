@@ -22,15 +22,15 @@ class ReadCard extends React.Component {
                           {
                               [...this.props.reads].reverse().map((read, index) => {
                                   let imageUrl="";
-                                  if (read.targetCluster === "DDAC"){
+                                  if (read.dc === "dc0"){
                                       imageUrl = require('../images/ddac.png')
                                   }
-                                  if (read.targetCluster === "OSSC"){
+                                  if (read.dc === "dc1"){
                                       imageUrl = require('../images/cassandra.png')
                                   }
                                   return (
-                                      <div key={index}>
-                                          <img src={imageUrl} alt={read.targetCluster}  height="36" width="58" style={{ paddingRight: "2em"}} />
+                                      <div key={index} style={{padding: '10px 0 10px 0', display: 'flex'}}>
+                                          <img src={imageUrl} alt={read.targetCluster}  top="5" height="36" width="58" style={{ paddingRight: "2em", alignItems: 'center'}} />
                                           Count: {read.count}, Result: {read.result}
                                       </div>
                                   )

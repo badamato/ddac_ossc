@@ -33,32 +33,30 @@ const styles = theme => ({
 
 class MainPage extends Component {
 
-  state = {
-    toggleReadButton: true,
-    toggleWriteButton: true,
-  }
+    state = {
+      toggleReadButton: true,
+      toggleWriteButton: true,
+    }
 
-  handleReadsClick = (dc, cluster) => {
-    this.props.getReads(dc, cluster);
-    this.setState({toggleReadButton: !this.state.toggleReadButton});
-    this.props.resetCard;
-  }
+    handleReadsClick = (dc, cluster) => {
+      this.props.getReads(dc, cluster);
+      this.setState({toggleReadButton: !this.state.toggleReadButton});
+      this.props.resetCard;
+    }
 
 
-  handleWritesClick = (dc, cluster) => {
-    this.props.getWrites(dc, cluster);
-    this.setState({toggleWriteButton: !this.state.toggleWriteButton});
-    this.props.resetCard;
-  }
+    handleWritesClick = (dc, cluster) => {
+      this.props.getWrites(dc, cluster);
+      this.setState({toggleWriteButton: !this.state.toggleWriteButton});
+      this.props.resetCard;
+    }
 
-  componentDidMount(){
-    this.props.init()
-  }
+    componentDidMount(){
+      this.props.init()
+    }
 
     render() {
-        console.log(this.state.toggleReadButton)
-        console.log(this.state.toggleWriteButton)
-        
+        // console.log(this.state.toggleReadButton)
         const { classes } = this.props;
         
         return (
@@ -82,7 +80,6 @@ class MainPage extends Component {
                                 >
                                   READ DDAC
                                 </Button> :
-
                                 <Button
                                   variant="contained" 
                                   color="primary" 
@@ -106,7 +103,6 @@ class MainPage extends Component {
                                 >
                                   WRITE DDAC
                                 </Button> :
-
                                 <Button
                                   variant="contained" 
                                   color="primary" 
