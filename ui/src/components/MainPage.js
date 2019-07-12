@@ -11,7 +11,7 @@ import { writeApi, readApi } from '../actions/actions';
 const styles = theme => ({
   paper: {
       display: 'flex',
-      width: '70%',
+      width: '30%',
       height: '80px',
       margin: '0 auto',
       backgroundColor: 'white',
