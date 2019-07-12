@@ -60,8 +60,8 @@ class MainPage extends Component {
         const { classes } = this.props;
         
         return (
-            <div className={"gridroot"} >
-                <Grid container justify='center' style={{marginTop: '70px'}}>
+            <div className={"gridroot"}>
+                <Grid container justify='center' style={{marginTop: '30px'}}>
                     <Grid item xs={12} sm={8}>
                         <Paper className={"papercard"}>
                             <ReadCard reset={this.state.toggleReadButton}/>
