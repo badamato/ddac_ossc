@@ -13,7 +13,7 @@ const styles = theme => ({
       display: 'flex',
       width: '30%',
       height: '80px',
-      margin: '0 auto',
+      margin: '30px auto',
       backgroundColor: 'white',
   },
   controlContainer: {
@@ -61,7 +61,7 @@ class MainPage extends Component {
         
         return (
             <div className={"gridroot"}>
-                <Grid container justify='center' style={{marginTop: '30px'}}>
+                <Grid container justify='center' style={{marginTop: '45px'}}>
                     <Grid item xs={12} sm={8}>
                         <Paper className={"papercard"}>
                             <ReadCard reset={this.state.toggleReadButton}/>

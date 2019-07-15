@@ -2,8 +2,8 @@ import React from "react";
 import { connect } from 'react-redux';
 import Divider from '@material-ui/core/Divider'
 import Typography from '@material-ui/core/Typography'
-import Card from 'material-kit-react/components/Card/Card';
-import CardBody from 'material-kit-react/components/Card/CardBody';
+import Card from '@material-ui/core/Card'
+import CardContent from '@material-ui/core/CardContent'
 
 
 class ReadCard extends React.Component {
@@ -17,7 +17,7 @@ class ReadCard extends React.Component {
                 <Card className={"classes"}>
                   <Typography variant='h5' className={"cardTitle"} style={{fontFamily: 'Raleway'}}>Cluster Activity</Typography>
                   <Divider variant='middle' className={"cardDivider"} style={{width: '92%', margin: '20px auto 0'}}/>
-                  <CardBody className={"cardbody"}>
+                  <CardContent className={"cardbody"}>
                       <div className={"cardtext"}>
                           {
                               [...this.props.reads].reverse().map((read, index) => {
@@ -37,7 +37,7 @@ class ReadCard extends React.Component {
                               })
                           }
                       </div>
-                  </CardBody>
+                  </CardContent>
                 </Card>
             </div>
         );
