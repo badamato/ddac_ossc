@@ -1,6 +1,7 @@
 #!/usr/bin/python
 
-import time, uuid, requests, urllib2, paramiko, json, re
+# import time, uuid, requests, urllib2, paramiko, json, re
+import time, uuid, paramiko, json, re
 from random import randint
 
 from flask import Flask, jsonify, abort, request, make_response, url_for, Response
