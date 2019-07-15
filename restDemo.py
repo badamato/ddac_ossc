@@ -314,7 +314,6 @@ def read():
       x = x + 1
       y = y + 1
     cluster.shutdown()
-  print("Here is readStream")
   return Response(readStream(targetCluster), content_type='application/stream+json')
 
 
